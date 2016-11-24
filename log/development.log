@@ -1,0 +1,1919 @@
+  [1m[35m (114.9ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying PRIMARY KEY)[0m
+  [1m[35m (128.1ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying PRIMARY KEY, "value" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT pg_try_advisory_lock(5110850682661079685);[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateMovies (20161124020350)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (165.4ms)[0m  [1m[35mCREATE TABLE "movies" ("id" serial primary key, "name" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20161124020350"]]
+  [1m[35m (25.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.6ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", 2016-11-24 02:06:17 UTC], ["updated_at", 2016-11-24 02:06:17 UTC]]
+  [1m[35m (6.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_advisory_unlock(5110850682661079685)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (3.7ms)[0m  [1m[34mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'movies'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_try_advisory_lock(5110850682661079685);[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateTags (20161124020622)
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (102.3ms)[0m  [1m[35mCREATE TABLE "tags" ("id" serial primary key, "name" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20161124020622"]]
+  [1m[35m (24.7ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateJoinTable (20161124020638)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE TABLE "movies_tags" ("movie_id" integer NOT NULL, "tag_id" integer NOT NULL)[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20161124020638"]]
+  [1m[35m (6.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(5110850682661079685)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (2.0ms)[0m  [1m[34mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'movies'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+  [1m[35m (1.7ms)[0m  [1m[34mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'movies_tags'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+  [1m[35m (1.9ms)[0m  [1m[34mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'tags'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+Started GET "/" for 127.0.0.1 at 2016-11-23 20:19:36 -0600
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by Rails::WelcomeController#index as HTML
+  Parameters: {"internal"=>true}
+  Rendering /var/lib/gems/2.3.0/gems/railties-5.0.0.1/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/railties-5.0.0.1/lib/rails/templates/rails/welcome/index.html.erb (5.5ms)
+Completed 200 OK in 49ms (Views: 11.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2016-11-23 20:20:42 -0600
+Processing by TagsController#index as HTML
+  Rendering tags/index.html.erb within layouts/application
+  [1m[36mTag Load (0.8ms)[0m  [1m[34mSELECT "tags".* FROM "tags"[0m
+  Rendered tags/index.html.erb within layouts/application (12.1ms)
+Completed 200 OK in 1735ms (Views: 1696.9ms | ActiveRecord: 2.6ms)
+
+
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.1ms)[0m  [1m[32mINSERT INTO "movies" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "Terminator"], ["created_at", 2016-11-24 02:26:39 UTC], ["updated_at", 2016-11-24 02:26:39 UTC]]
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "tags" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "Terrible de buena"], ["created_at", 2016-11-24 02:26:39 UTC], ["updated_at", 2016-11-24 02:26:39 UTC]]
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "movies_tags" ("movie_id", "tag_id") VALUES ($1, $2)[0m  [["movie_id", 1], ["tag_id", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "tags" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "Acción"], ["created_at", 2016-11-24 02:26:39 UTC], ["updated_at", 2016-11-24 02:26:39 UTC]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "movies_tags" ("movie_id", "tag_id") VALUES ($1, $2)[0m  [["movie_id", 1], ["tag_id", 2]]
+  [1m[35m (22.1ms)[0m  [1m[35mCOMMIT[0m
+Started GET "/" for 127.0.0.1 at 2016-11-23 20:31:56 -0600
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by TagsController#index as HTML
+  Rendering tags/index.html.erb within layouts/application
+  [1m[36mTag Load (0.4ms)[0m  [1m[34mSELECT "tags".* FROM "tags"[0m
+  Rendered tags/index.html.erb within layouts/application (14.2ms)
+Completed 200 OK in 298ms (Views: 277.4ms | ActiveRecord: 3.2ms)
+
+
+Started GET "/" for 127.0.0.1 at 2016-11-23 20:34:52 -0600
+Processing by TagsController#index as HTML
+  Rendering tags/index.html.erb within layouts/application
+  [1m[36mTag Load (0.6ms)[0m  [1m[34mSELECT "tags".* FROM "tags"[0m
+  Rendered tags/index.html.erb within layouts/application (4.6ms)
+Completed 200 OK in 73ms (Views: 69.7ms | ActiveRecord: 0.6ms)
+
+
+  [1m[36mMovie Load (0.6ms)[0m  [1m[34mSELECT  "movies".* FROM "movies" ORDER BY "movies"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mTag Load (0.7ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 1]]
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT COUNT(*) FROM "tags"[0m
+Started GET "/" for 127.0.0.1 at 2016-11-23 20:39:48 -0600
+Processing by MoviesController#index as HTML
+  Rendering movies/index.html.erb within layouts/application
+  Rendered movies/index.html.erb within layouts/application (1.3ms)
+Completed 500 Internal Server Error in 12ms (ActiveRecord: 0.0ms)
+
+
+  
+SyntaxError (/home/uracilo/Desktop/movies/app/views/movies/index.html.erb:26: syntax error, unexpected ',', expecting ')'
+...d=( movie.tags.collect(&:name),join(“,”)  );@output_buff...
+...                               ^):
+  
+app/views/movies/index.html.erb:26: syntax error, unexpected ',', expecting ')'
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (4.4ms)
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.8ms)
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.7ms)
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (19.5ms)
+Started GET "/" for 127.0.0.1 at 2016-11-23 20:40:42 -0600
+Processing by MoviesController#index as HTML
+  Rendering movies/index.html.erb within layouts/application
+  Rendered movies/index.html.erb within layouts/application (1.3ms)
+Completed 500 Internal Server Error in 6ms (ActiveRecord: 0.0ms)
+
+
+  
+SyntaxError (/home/uracilo/Desktop/movies/app/views/movies/index.html.erb:25: syntax error, unexpected ',', expecting ')'
+...pend=( movie.tags.pluck(:name),join(“,”)  );@output_buff...
+...                               ^):
+  
+app/views/movies/index.html.erb:25: syntax error, unexpected ',', expecting ')'
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (4.6ms)
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.9ms)
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.7ms)
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (19.7ms)
+Started GET "/" for 127.0.0.1 at 2016-11-23 20:40:57 -0600
+Processing by MoviesController#index as HTML
+  Rendering movies/index.html.erb within layouts/application
+  Rendered movies/index.html.erb within layouts/application (1.5ms)
+Completed 500 Internal Server Error in 7ms (ActiveRecord: 0.0ms)
+
+
+  
+SyntaxError (/home/uracilo/Desktop/movies/app/views/movies/index.html.erb:17: syntax error, unexpected ',', expecting ')'
+...pend=( movie.tags.pluck(:name),join(“,”)  );@output_buff...
+...                               ^):
+  
+app/views/movies/index.html.erb:17: syntax error, unexpected ',', expecting ')'
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (5.4ms)
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.9ms)
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.7ms)
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (21.0ms)
+Started GET "/" for 127.0.0.1 at 2016-11-23 20:41:27 -0600
+Processing by MoviesController#index as HTML
+  Rendering movies/index.html.erb within layouts/application
+  Rendered movies/index.html.erb within layouts/application (1.6ms)
+Completed 500 Internal Server Error in 7ms (ActiveRecord: 0.0ms)
+
+
+  
+SyntaxError (/home/uracilo/Desktop/movies/app/views/movies/index.html.erb:17: syntax error, unexpected ',', expecting ')'
+...pend=( movie.tags.pluck(:name),join(', ')  );@output_buffer....
+...                               ^):
+  
+app/views/movies/index.html.erb:17: syntax error, unexpected ',', expecting ')'
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (5.1ms)
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.4ms)
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.7ms)
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (21.5ms)
+Started GET "/" for 127.0.0.1 at 2016-11-23 20:42:36 -0600
+Processing by MoviesController#index as HTML
+  Rendering movies/index.html.erb within layouts/application
+  Rendered movies/index.html.erb within layouts/application (1.5ms)
+Completed 500 Internal Server Error in 6ms (ActiveRecord: 0.0ms)
+
+
+  
+SyntaxError (/home/uracilo/Desktop/movies/app/views/movies/index.html.erb:18: syntax error, unexpected ',', expecting ')'
+...pend=( movie.tags.pluck(:name),join(', ')  );@output_buffer....
+...                               ^):
+  
+app/views/movies/index.html.erb:18: syntax error, unexpected ',', expecting ')'
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (4.2ms)
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (3.5ms)
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.6ms)
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (20.8ms)
+Started GET "/" for 127.0.0.1 at 2016-11-23 20:43:38 -0600
+Processing by MoviesController#index as HTML
+  Rendering movies/index.html.erb within layouts/application
+  Rendered movies/index.html.erb within layouts/application (1.2ms)
+Completed 500 Internal Server Error in 5ms (ActiveRecord: 0.0ms)
+
+
+  
+SyntaxError (/home/uracilo/Desktop/movies/app/views/movies/index.html.erb:18: syntax error, unexpected ',', expecting ')'
+...end=( movie.tags.pluck(&:name),join(', ')  );@output_buffer....
+...                               ^):
+  
+app/views/movies/index.html.erb:18: syntax error, unexpected ',', expecting ')'
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (4.4ms)
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.0ms)
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.7ms)
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (19.8ms)
+Started GET "/" for 127.0.0.1 at 2016-11-23 20:45:01 -0600
+Processing by MoviesController#index as HTML
+  Rendering movies/index.html.erb within layouts/application
+  [1m[36mMovie Load (0.9ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  [1m[36mTag Load (0.6ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 1]]
+  Rendered movies/index.html.erb within layouts/application (71.4ms)
+Completed 200 OK in 97ms (Views: 81.6ms | ActiveRecord: 13.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2016-11-23 20:50:53 -0600
+Processing by MoviesController#index as HTML
+  Rendering movies/index.html.erb within layouts/application
+  Rendered movies/index.html.erb within layouts/application (1.7ms)
+Completed 500 Internal Server Error in 7ms (ActiveRecord: 0.0ms)
+
+
+  
+SyntaxError (/home/uracilo/Desktop/movies/app/views/movies/index.html.erb:28: syntax error, unexpected keyword_class, expecting keyword_do or '{' or '('
+...d=( link_to 'Show', movie class= "btn btn-primary");@output_...
+...                               ^
+/home/uracilo/Desktop/movies/app/views/movies/index.html.erb:29: syntax error, unexpected keyword_class, expecting ')'
+...', edit_movie_path(movie) class= "btn btn-warning");@output_...
+...                               ^
+/home/uracilo/Desktop/movies/app/views/movies/index.html.erb:30: syntax error, unexpected keyword_class, expecting ')'
+...onfirm: 'Are you sure?' } class= "btn btn-danger");@output_b...
+...                               ^):
+  
+app/views/movies/index.html.erb:28: syntax error, unexpected keyword_class, expecting keyword_do or '{' or '('
+app/views/movies/index.html.erb:29: syntax error, unexpected keyword_class, expecting ')'
+app/views/movies/index.html.erb:30: syntax error, unexpected keyword_class, expecting ')'
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (5.1ms)
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.9ms)
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.8ms)
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (21.1ms)
+Started GET "/" for 127.0.0.1 at 2016-11-23 20:52:47 -0600
+Processing by MoviesController#index as HTML
+  Rendering movies/index.html.erb within layouts/application
+  [1m[36mMovie Load (0.5ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  [1m[36mTag Load (0.5ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 1]]
+  Rendered movies/index.html.erb within layouts/application (7.3ms)
+Completed 200 OK in 40ms (Views: 37.0ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2016-11-23 20:53:06 -0600
+Processing by MoviesController#index as HTML
+  Rendering movies/index.html.erb within layouts/application
+  [1m[36mMovie Load (0.9ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  [1m[36mTag Load (0.6ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 1]]
+  Rendered movies/index.html.erb within layouts/application (8.6ms)
+Completed 200 OK in 44ms (Views: 39.9ms | ActiveRecord: 1.8ms)
+
+
+Started GET "/movies/new" for 127.0.0.1 at 2016-11-23 20:53:45 -0600
+Processing by MoviesController#new as HTML
+  Rendering movies/new.html.erb within layouts/application
+  Rendered movies/_form.html.erb (20.7ms)
+  Rendered movies/new.html.erb within layouts/application (22.4ms)
+Completed 200 OK in 49ms (Views: 47.5ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/movies" for 127.0.0.1 at 2016-11-23 20:53:58 -0600
+Processing by MoviesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"A247QeEFt7IPaByYh1dp6mxEeVjuZEH9ZeSOwSrGQkmgc5STcbFBZWBKDs6RloVTzwDtVzQAXZJN8+hXf5qmLQ==", "movie"=>{"name"=>"Harry Potter"}, "commit"=>"Create Movie"}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "movies" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "Harry Potter"], ["created_at", 2016-11-24 02:53:58 UTC], ["updated_at", 2016-11-24 02:53:58 UTC]]
+  [1m[35m (39.8ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/movies/2
+Completed 302 Found in 47ms (ActiveRecord: 40.6ms)
+
+
+Started GET "/movies/2" for 127.0.0.1 at 2016-11-23 20:53:58 -0600
+Processing by MoviesController#show as HTML
+  Parameters: {"id"=>"2"}
+  [1m[36mMovie Load (0.5ms)[0m  [1m[34mSELECT  "movies".* FROM "movies" WHERE "movies"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  Rendering movies/show.html.erb within layouts/application
+  Rendered movies/show.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 29ms (Views: 23.9ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/movies" for 127.0.0.1 at 2016-11-23 20:54:02 -0600
+Processing by MoviesController#index as HTML
+  Rendering movies/index.html.erb within layouts/application
+  [1m[36mMovie Load (0.4ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  [1m[36mTag Load (0.7ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 1]]
+  [1m[36mTag Load (0.6ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 2]]
+  Rendered movies/index.html.erb within layouts/application (13.1ms)
+Completed 200 OK in 53ms (Views: 49.6ms | ActiveRecord: 1.7ms)
+
+
+Started GET "/movies/new" for 127.0.0.1 at 2016-11-23 20:54:38 -0600
+Processing by MoviesController#new as HTML
+  Rendering movies/new.html.erb within layouts/application
+  Rendered movies/_form.html.erb (4.4ms)
+  Rendered movies/new.html.erb within layouts/application (6.2ms)
+Completed 200 OK in 39ms (Views: 37.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/movies" for 127.0.0.1 at 2016-11-23 20:58:21 -0600
+Processing by MoviesController#index as HTML
+  Rendering movies/index.html.erb within layouts/application
+  [1m[36mMovie Load (1.2ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  [1m[36mTag Load (0.9ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 1]]
+  [1m[36mTag Load (0.4ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 2]]
+  Rendered movies/index.html.erb within layouts/application (12.5ms)
+Completed 200 OK in 43ms (Views: 38.8ms | ActiveRecord: 2.8ms)
+
+
+Started GET "/movies/new" for 127.0.0.1 at 2016-11-23 20:58:23 -0600
+Processing by MoviesController#new as HTML
+  Rendering movies/new.html.erb within layouts/application
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags"[0m
+  Rendered movies/_form.html.erb (34.9ms)
+  Rendered movies/new.html.erb within layouts/application (35.9ms)
+Completed 500 Internal Server Error in 39ms (ActiveRecord: 0.3ms)
+
+
+  
+ActionView::Template::Error (undefined method `tags_ids' for #<Movie id: nil, name: nil, created_at: nil, updated_at: nil>
+Did you mean?  tag_ids
+               tags
+               tag_ids=):
+    18: 
+    19: <div  class="field">
+    20:         <%= f.label :tag_name %><br>  
+    21:         <%= f.select(:tags_ids, Tag.all.map{|t| [t.name,  t.id]}  ) %>  
+    22: </div>
+    23: 
+    24:   <div class="actions btn btn-default">
+  
+app/views/movies/_form.html.erb:21:in `block in _app_views_movies__form_html_erb___4238783862552387287_70133111178080'
+app/views/movies/_form.html.erb:1:in `_app_views_movies__form_html_erb___4238783862552387287_70133111178080'
+app/views/movies/new.html.erb:3:in `_app_views_movies_new_html_erb___556205600032599287_70133111214700'
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/template_error.html.erb within rescues/layout
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (5.3ms)
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.0ms)
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.6ms)
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/template_error.html.erb within rescues/layout (20.7ms)
+Started GET "/movies" for 127.0.0.1 at 2016-11-23 20:58:27 -0600
+Processing by MoviesController#index as HTML
+  Rendering movies/index.html.erb within layouts/application
+  [1m[36mMovie Load (0.3ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 1]]
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 2]]
+  Rendered movies/index.html.erb within layouts/application (5.3ms)
+Completed 200 OK in 26ms (Views: 24.1ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/movies/new" for 127.0.0.1 at 2016-11-23 21:03:25 -0600
+Processing by MoviesController#new as HTML
+  Rendering movies/new.html.erb within layouts/application
+  Rendered movies/_form.html.erb (1.7ms)
+  Rendered movies/new.html.erb within layouts/application (3.5ms)
+Completed 500 Internal Server Error in 8ms (ActiveRecord: 0.0ms)
+
+
+  
+SyntaxError (/home/uracilo/Desktop/movies/app/views/movies/_form.html.erb:21: syntax error, unexpected '(', expecting ')'
+...lect  attr_accessor :tags_ids (:tags_ids, Tag.all.map{|t| [t...
+...                               ^
+/home/uracilo/Desktop/movies/app/views/movies/_form.html.erb:21: syntax error, unexpected ')', expecting keyword_end
+...l.map{|t| [t.name,  t.id]}  ) );@output_buffer.safe_append='...
+...                               ^):
+  
+app/views/movies/_form.html.erb:21: syntax error, unexpected '(', expecting ')'
+app/views/movies/_form.html.erb:21: syntax error, unexpected ')', expecting keyword_end
+app/views/movies/new.html.erb:3:in `_app_views_movies_new_html_erb___556205600032599287_70133108919020'
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (5.0ms)
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.0ms)
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.6ms)
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (20.2ms)
+Started GET "/movies/new" for 127.0.0.1 at 2016-11-23 21:03:28 -0600
+Processing by MoviesController#new as HTML
+  Rendering movies/new.html.erb within layouts/application
+  Rendered movies/_form.html.erb (2.1ms)
+  Rendered movies/new.html.erb within layouts/application (3.5ms)
+Completed 500 Internal Server Error in 8ms (ActiveRecord: 0.0ms)
+
+
+  
+SyntaxError (/home/uracilo/Desktop/movies/app/views/movies/_form.html.erb:21: syntax error, unexpected '(', expecting ')'
+...lect  attr_accessor :tags_ids (:tags_ids, Tag.all.map{|t| [t...
+...                               ^
+/home/uracilo/Desktop/movies/app/views/movies/_form.html.erb:21: syntax error, unexpected ')', expecting keyword_end
+...l.map{|t| [t.name,  t.id]}  ) );@output_buffer.safe_append='...
+...                               ^):
+  
+app/views/movies/_form.html.erb:21: syntax error, unexpected '(', expecting ')'
+app/views/movies/_form.html.erb:21: syntax error, unexpected ')', expecting keyword_end
+app/views/movies/new.html.erb:3:in `_app_views_movies_new_html_erb___556205600032599287_70133112633060'
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (5.3ms)
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.0ms)
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.6ms)
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (20.0ms)
+Started GET "/movies/new" for 127.0.0.1 at 2016-11-23 21:04:10 -0600
+Processing by MoviesController#new as HTML
+  Rendering movies/new.html.erb within layouts/application
+  Rendered movies/_form.html.erb (1.4ms)
+  Rendered movies/new.html.erb within layouts/application (3.0ms)
+Completed 500 Internal Server Error in 22ms (ActiveRecord: 3.2ms)
+
+
+  
+SyntaxError (/home/uracilo/Desktop/movies/app/views/movies/_form.html.erb:21: syntax error, unexpected '(', expecting ')'
+...r.append=( f.select :tags_ids (:tags_ids, Tag.all.map{|t| [t...
+...                               ^
+/home/uracilo/Desktop/movies/app/views/movies/_form.html.erb:21: syntax error, unexpected ')', expecting keyword_end
+...l.map{|t| [t.name,  t.id]}  ) );@output_buffer.safe_append='...
+...                               ^):
+  
+app/views/movies/_form.html.erb:21: syntax error, unexpected '(', expecting ')'
+app/views/movies/_form.html.erb:21: syntax error, unexpected ')', expecting keyword_end
+app/views/movies/new.html.erb:3:in `_app_views_movies_new_html_erb___556205600032599287_70133110289640'
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (7.5ms)
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.0ms)
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.7ms)
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (22.7ms)
+Started GET "/movies/new" for 127.0.0.1 at 2016-11-23 21:07:53 -0600
+Processing by MoviesController#new as HTML
+  Rendering movies/new.html.erb within layouts/application
+  Rendered movies/_form.html.erb (1.6ms)
+  Rendered movies/new.html.erb within layouts/application (2.8ms)
+Completed 500 Internal Server Error in 17ms (ActiveRecord: 0.0ms)
+
+
+  
+SyntaxError (/home/uracilo/Desktop/movies/app/views/movies/_form.html.erb:21: syntax error, unexpected ( arg, expecting ')'
+...select :tags_ids, Tag.all.map (:tags_ids, Tag.all.map{|t| [t...
+...                               ^
+/home/uracilo/Desktop/movies/app/views/movies/_form.html.erb:21: syntax error, unexpected ',', expecting ')'
+...gs_ids, Tag.all.map (:tags_ids, Tag.all.map{|t| [t.name,  t....
+...                               ^
+/home/uracilo/Desktop/movies/app/views/movies/_form.html.erb:21: syntax error, unexpected ')', expecting keyword_end
+...l.map{|t| [t.name,  t.id]}  ) );@output_buffer.safe_append='...
+...                               ^):
+  
+app/views/movies/_form.html.erb:21: syntax error, unexpected ( arg, expecting ')'
+app/views/movies/_form.html.erb:21: syntax error, unexpected ',', expecting ')'
+app/views/movies/_form.html.erb:21: syntax error, unexpected ')', expecting keyword_end
+app/views/movies/new.html.erb:3:in `_app_views_movies_new_html_erb___556205600032599287_70132991053780'
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (5.2ms)
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.0ms)
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.7ms)
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (20.5ms)
+Started GET "/movies/new" for 127.0.0.1 at 2016-11-23 21:08:50 -0600
+Processing by MoviesController#new as HTML
+  Rendering movies/new.html.erb within layouts/application
+  Rendered movies/_form.html.erb (1.8ms)
+  Rendered movies/new.html.erb within layouts/application (3.2ms)
+Completed 500 Internal Server Error in 8ms (ActiveRecord: 0.0ms)
+
+
+  
+SyntaxError (/home/uracilo/Desktop/movies/app/views/movies/_form.html.erb:21: syntax error, unexpected ')', expecting keyword_end
+...l.map{|t| [t.name,  t.id]}  ) );@output_buffer.safe_append='...
+...                               ^):
+  
+app/views/movies/_form.html.erb:21: syntax error, unexpected ')', expecting keyword_end
+app/views/movies/new.html.erb:3:in `_app_views_movies_new_html_erb___556205600032599287_70133110069780'
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (4.6ms)
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.9ms)
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.7ms)
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (19.4ms)
+Started GET "/movies/new" for 127.0.0.1 at 2016-11-23 21:09:18 -0600
+Processing by MoviesController#new as HTML
+  Rendering movies/new.html.erb within layouts/application
+  [1m[36mTag Load (0.5ms)[0m  [1m[34mSELECT "tags".* FROM "tags"[0m
+  Rendered movies/_form.html.erb (27.5ms)
+  Rendered movies/new.html.erb within layouts/application (29.5ms)
+Completed 200 OK in 65ms (Views: 49.7ms | ActiveRecord: 8.3ms)
+
+
+Started POST "/movies" for 127.0.0.1 at 2016-11-23 21:09:24 -0600
+Processing by MoviesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"Cv2/FYudc2JL2GxNAlqZa0UsZU7vERAGxXjrr07q0UFynNc17EtzcwLgW7l2C+pPxZBE5GWVJvBVANk5vBSdGw==", "movie"=>{"name"=>"", "tags_ids"=>"1"}, "commit"=>"Create Movie"}
+Unpermitted parameter: tags_ids
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "movies" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", ""], ["created_at", 2016-11-24 03:09:24 UTC], ["updated_at", 2016-11-24 03:09:24 UTC]]
+  [1m[35m (22.0ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/movies/3
+Completed 302 Found in 30ms (ActiveRecord: 23.0ms)
+
+
+Started GET "/movies/3" for 127.0.0.1 at 2016-11-23 21:09:24 -0600
+Processing by MoviesController#show as HTML
+  Parameters: {"id"=>"3"}
+  [1m[36mMovie Load (0.4ms)[0m  [1m[34mSELECT  "movies".* FROM "movies" WHERE "movies"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  Rendering movies/show.html.erb within layouts/application
+  Rendered movies/show.html.erb within layouts/application (0.9ms)
+Completed 200 OK in 33ms (Views: 28.1ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/movies" for 127.0.0.1 at 2016-11-23 21:09:26 -0600
+Processing by MoviesController#index as HTML
+  Rendering movies/index.html.erb within layouts/application
+  [1m[36mMovie Load (0.4ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  [1m[36mTag Load (0.7ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 1]]
+  [1m[36mTag Load (0.4ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 2]]
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 3]]
+  Rendered movies/index.html.erb within layouts/application (18.6ms)
+Completed 200 OK in 40ms (Views: 37.0ms | ActiveRecord: 1.8ms)
+
+
+Started GET "/movies/new" for 127.0.0.1 at 2016-11-23 21:09:28 -0600
+Processing by MoviesController#new as HTML
+  Rendering movies/new.html.erb within layouts/application
+  [1m[36mTag Load (0.5ms)[0m  [1m[34mSELECT "tags".* FROM "tags"[0m
+  Rendered movies/_form.html.erb (8.8ms)
+  Rendered movies/new.html.erb within layouts/application (11.6ms)
+Completed 200 OK in 50ms (Views: 46.1ms | ActiveRecord: 0.5ms)
+
+
+Started POST "/movies" for 127.0.0.1 at 2016-11-23 21:09:36 -0600
+Processing by MoviesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"SC5fSsSWK2Zn4AHNMqmJ+kTOi51RgLC9X2x7jCcm3HrrM/CYVCLdsQjCE5skaGVD54ofkovkrNJ3ex0acno4Hg==", "movie"=>{"name"=>"qwdas", "tags_ids"=>"1"}, "commit"=>"Create Movie"}
+Unpermitted parameter: tags_ids
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "movies" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "qwdas"], ["created_at", 2016-11-24 03:09:36 UTC], ["updated_at", 2016-11-24 03:09:36 UTC]]
+  [1m[35m (34.6ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/movies/4
+Completed 302 Found in 42ms (ActiveRecord: 35.7ms)
+
+
+Started GET "/movies/4" for 127.0.0.1 at 2016-11-23 21:09:36 -0600
+Processing by MoviesController#show as HTML
+  Parameters: {"id"=>"4"}
+  [1m[36mMovie Load (0.4ms)[0m  [1m[34mSELECT  "movies".* FROM "movies" WHERE "movies"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  Rendering movies/show.html.erb within layouts/application
+  Rendered movies/show.html.erb within layouts/application (1.1ms)
+Completed 200 OK in 36ms (Views: 33.5ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/movies" for 127.0.0.1 at 2016-11-23 21:09:39 -0600
+Processing by MoviesController#index as HTML
+  Rendering movies/index.html.erb within layouts/application
+  [1m[36mMovie Load (0.7ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  [1m[36mTag Load (0.4ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 1]]
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 2]]
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 3]]
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 4]]
+  Rendered movies/index.html.erb within layouts/application (20.7ms)
+Completed 200 OK in 55ms (Views: 50.0ms | ActiveRecord: 2.0ms)
+
+
+Started DELETE "/movies/4" for 127.0.0.1 at 2016-11-23 21:09:43 -0600
+Processing by MoviesController#destroy as HTML
+  Parameters: {"authenticity_token"=>"utVEUuWDpWokPbCswxklnxVSMZdxLMWyx9D00glQKSXCtCxyglWle20Fh1i3SFa7le4QPfuo80RXqMZE+65lfw==", "id"=>"4"}
+  [1m[36mMovie Load (0.5ms)[0m  [1m[34mSELECT  "movies".* FROM "movies" WHERE "movies"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[31mDELETE FROM "movies_tags" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 4]]
+  [1m[35mSQL (0.5ms)[0m  [1m[31mDELETE FROM "movies" WHERE "movies"."id" = $1[0m  [["id", 4]]
+  [1m[35m (16.5ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/movies
+Completed 302 Found in 29ms (ActiveRecord: 20.9ms)
+
+
+Started GET "/movies" for 127.0.0.1 at 2016-11-23 21:09:43 -0600
+Processing by MoviesController#index as HTML
+  Rendering movies/index.html.erb within layouts/application
+  [1m[36mMovie Load (0.6ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  [1m[36mTag Load (0.5ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 1]]
+  [1m[36mTag Load (0.4ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 2]]
+  [1m[36mTag Load (0.5ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 3]]
+  Rendered movies/index.html.erb within layouts/application (13.1ms)
+Completed 200 OK in 41ms (Views: 37.6ms | ActiveRecord: 2.0ms)
+
+
+Started DELETE "/movies/3" for 127.0.0.1 at 2016-11-23 21:09:46 -0600
+Processing by MoviesController#destroy as HTML
+  Parameters: {"authenticity_token"=>"wUgyFcLoKFqu6VvQPj4VTt0tRrrP0vDLQLyEWSJTNI65KVo1pT4oS+fRbCRKb2ZqXZFnEEVWxj3QxLbP0K141A==", "id"=>"3"}
+  [1m[36mMovie Load (0.4ms)[0m  [1m[34mSELECT  "movies".* FROM "movies" WHERE "movies"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[31mDELETE FROM "movies_tags" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 3]]
+  [1m[35mSQL (0.4ms)[0m  [1m[31mDELETE FROM "movies" WHERE "movies"."id" = $1[0m  [["id", 3]]
+  [1m[35m (22.6ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/movies
+Completed 302 Found in 31ms (ActiveRecord: 24.4ms)
+
+
+Started GET "/movies" for 127.0.0.1 at 2016-11-23 21:09:46 -0600
+Processing by MoviesController#index as HTML
+  Rendering movies/index.html.erb within layouts/application
+  [1m[36mMovie Load (0.5ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  [1m[36mTag Load (0.7ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 1]]
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 2]]
+  Rendered movies/index.html.erb within layouts/application (8.5ms)
+Completed 200 OK in 35ms (Views: 32.2ms | ActiveRecord: 1.5ms)
+
+
+Started GET "/movies/new" for 127.0.0.1 at 2016-11-23 21:11:31 -0600
+Processing by MoviesController#new as HTML
+  Rendering movies/new.html.erb within layouts/application
+  [1m[36mTag Load (0.4ms)[0m  [1m[34mSELECT "tags".* FROM "tags"[0m
+  Rendered movies/_form.html.erb (5.8ms)
+  Rendered movies/new.html.erb within layouts/application (7.3ms)
+Completed 200 OK in 39ms (Views: 36.0ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/movies/new" for 127.0.0.1 at 2016-11-23 21:11:49 -0600
+Processing by MoviesController#new as HTML
+  Rendering movies/new.html.erb within layouts/application
+  [1m[36mTag Load (0.2ms)[0m  [1m[34mSELECT "tags".* FROM "tags"[0m
+  Rendered movies/_form.html.erb (2.5ms)
+  Rendered movies/new.html.erb within layouts/application (3.3ms)
+Completed 200 OK in 20ms (Views: 18.5ms | ActiveRecord: 0.2ms)
+
+
+Started POST "/movies" for 127.0.0.1 at 2016-11-23 21:11:57 -0600
+Processing by MoviesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"9udLyUKwUw5TppoT2nIkySvPHMu//yDSpilzIgHMGS6OhiPpJWZTHxqereeuI1ftq3M9YTV7FiQ2UUG08zJVdA==", "movie"=>{"name"=>"accion", "tags_ids"=>"2"}, "commit"=>"Create Movie"}
+Unpermitted parameter: tags_ids
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "movies" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "accion"], ["created_at", 2016-11-24 03:11:57 UTC], ["updated_at", 2016-11-24 03:11:57 UTC]]
+  [1m[35m (52.3ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/movies/5
+Completed 302 Found in 60ms (ActiveRecord: 53.3ms)
+
+
+Started GET "/movies/5" for 127.0.0.1 at 2016-11-23 21:11:57 -0600
+Processing by MoviesController#show as HTML
+  Parameters: {"id"=>"5"}
+  [1m[36mMovie Load (0.4ms)[0m  [1m[34mSELECT  "movies".* FROM "movies" WHERE "movies"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  Rendering movies/show.html.erb within layouts/application
+  Rendered movies/show.html.erb within layouts/application (1.2ms)
+Completed 200 OK in 32ms (Views: 29.5ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/movies" for 127.0.0.1 at 2016-11-23 21:11:58 -0600
+Processing by MoviesController#index as HTML
+  Rendering movies/index.html.erb within layouts/application
+  [1m[36mMovie Load (0.5ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  [1m[36mTag Load (0.5ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 1]]
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 2]]
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 5]]
+  Rendered movies/index.html.erb within layouts/application (23.0ms)
+Completed 200 OK in 52ms (Views: 48.5ms | ActiveRecord: 1.7ms)
+
+
+Started GET "/movies/new" for 127.0.0.1 at 2016-11-23 21:13:04 -0600
+Processing by MoviesController#new as HTML
+  Rendering movies/new.html.erb within layouts/application
+  [1m[36mTag Load (0.4ms)[0m  [1m[34mSELECT "tags".* FROM "tags"[0m
+  Rendered movies/_form.html.erb (5.3ms)
+  Rendered movies/new.html.erb within layouts/application (6.8ms)
+Completed 200 OK in 32ms (Views: 30.2ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/movies" for 127.0.0.1 at 2016-11-23 21:13:11 -0600
+Processing by MoviesController#index as HTML
+  Rendering movies/index.html.erb within layouts/application
+  [1m[36mMovie Load (0.5ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  [1m[36mTag Load (0.7ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 1]]
+  [1m[36mTag Load (0.7ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 2]]
+  [1m[36mTag Load (0.5ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 5]]
+  Rendered movies/index.html.erb within layouts/application (13.0ms)
+Completed 200 OK in 36ms (Views: 32.1ms | ActiveRecord: 2.3ms)
+
+
+Started GET "/movies/new" for 127.0.0.1 at 2016-11-23 21:14:23 -0600
+Processing by MoviesController#new as HTML
+  Rendering movies/new.html.erb within layouts/application
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags"[0m
+  Rendered movies/_form.html.erb (4.4ms)
+  Rendered movies/new.html.erb within layouts/application (5.8ms)
+Completed 200 OK in 28ms (Views: 26.9ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/movies" for 127.0.0.1 at 2016-11-23 21:14:29 -0600
+Processing by MoviesController#index as HTML
+  Rendering movies/index.html.erb within layouts/application
+  [1m[36mMovie Load (0.5ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  [1m[36mTag Load (0.6ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 1]]
+  [1m[36mTag Load (0.4ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 2]]
+  [1m[36mTag Load (0.4ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 5]]
+  Rendered movies/index.html.erb within layouts/application (14.5ms)
+Completed 200 OK in 43ms (Views: 39.0ms | ActiveRecord: 1.9ms)
+
+
+Started GET "/movies/new" for 127.0.0.1 at 2016-11-23 21:16:15 -0600
+Processing by MoviesController#new as HTML
+  Rendering movies/new.html.erb within layouts/application
+  [1m[36mTag Load (0.4ms)[0m  [1m[34mSELECT "tags".* FROM "tags"[0m
+  Rendered movies/_form.html.erb (13.3ms)
+  Rendered movies/new.html.erb within layouts/application (14.7ms)
+Completed 200 OK in 48ms (Views: 37.4ms | ActiveRecord: 0.4ms)
+
+
+Started POST "/movies" for 127.0.0.1 at 2016-11-23 21:16:22 -0600
+Processing by MoviesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"/hvoZae8goYX7Cit+16LVHMEd9anmYlog8kAqFZjhHpdBke3Nwh0UXjOOvvtn2ft0EDj2X39lQer3mY+Az9gHg==", "movie"=>{"name"=>"Harry Potter", "tags_ids"=>["", "1"]}, "commit"=>"Create Movie"}
+Unpermitted parameter: tags_ids
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "movies" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "Harry Potter"], ["created_at", 2016-11-24 03:16:22 UTC], ["updated_at", 2016-11-24 03:16:22 UTC]]
+  [1m[35m (37.5ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/movies/6
+Completed 302 Found in 44ms (ActiveRecord: 38.4ms)
+
+
+Started GET "/movies/6" for 127.0.0.1 at 2016-11-23 21:16:22 -0600
+Processing by MoviesController#show as HTML
+  Parameters: {"id"=>"6"}
+  [1m[36mMovie Load (0.4ms)[0m  [1m[34mSELECT  "movies".* FROM "movies" WHERE "movies"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+  Rendering movies/show.html.erb within layouts/application
+  Rendered movies/show.html.erb within layouts/application (1.1ms)
+Completed 200 OK in 38ms (Views: 34.5ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/movies" for 127.0.0.1 at 2016-11-23 21:16:25 -0600
+Processing by MoviesController#index as HTML
+  Rendering movies/index.html.erb within layouts/application
+  [1m[36mMovie Load (0.6ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  [1m[36mTag Load (0.7ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 1]]
+  [1m[36mTag Load (0.4ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 2]]
+  [1m[36mTag Load (0.5ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 5]]
+  [1m[36mTag Load (0.4ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 6]]
+  Rendered movies/index.html.erb within layouts/application (23.0ms)
+Completed 200 OK in 49ms (Views: 44.9ms | ActiveRecord: 2.5ms)
+
+
+Started DELETE "/movies/2" for 127.0.0.1 at 2016-11-23 21:20:40 -0600
+Processing by MoviesController#destroy as HTML
+  Parameters: {"authenticity_token"=>"mR6vkvIisEPIV92Vt2WkFOjKizJFdSr3efq5Q2WYSmThf8eylfSwUoFv6mHDNNcwaHaqmM/xHAHpgovVl2YGPg==", "id"=>"2"}
+  [1m[36mMovie Load (0.4ms)[0m  [1m[34mSELECT  "movies".* FROM "movies" WHERE "movies"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[31mDELETE FROM "movies_tags" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 2]]
+  [1m[35mSQL (0.2ms)[0m  [1m[31mDELETE FROM "movies" WHERE "movies"."id" = $1[0m  [["id", 2]]
+  [1m[35m (23.1ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/movies
+Completed 302 Found in 45ms (ActiveRecord: 25.3ms)
+
+
+Started GET "/movies" for 127.0.0.1 at 2016-11-23 21:20:40 -0600
+Processing by MoviesController#index as HTML
+  Rendering movies/index.html.erb within layouts/application
+  [1m[36mMovie Load (0.5ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  [1m[36mTag Load (0.4ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 1]]
+  [1m[36mTag Load (0.2ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 5]]
+  [1m[36mTag Load (0.1ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 6]]
+  Rendered movies/index.html.erb within layouts/application (20.2ms)
+Completed 200 OK in 55ms (Views: 48.6ms | ActiveRecord: 5.6ms)
+
+
+Started DELETE "/movies/5" for 127.0.0.1 at 2016-11-23 21:20:43 -0600
+Processing by MoviesController#destroy as HTML
+  Parameters: {"authenticity_token"=>"zfWRl80uTIjVUh2rlyOaAzM4lMGh5RyYxvifo8sdjVy1lPm3qvhMmZxqKl/jcukns4S1aythKm5WgK01OePBBg==", "id"=>"5"}
+  [1m[36mMovie Load (0.4ms)[0m  [1m[34mSELECT  "movies".* FROM "movies" WHERE "movies"."id" = $1 LIMIT $2[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[31mDELETE FROM "movies_tags" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 5]]
+  [1m[35mSQL (0.3ms)[0m  [1m[31mDELETE FROM "movies" WHERE "movies"."id" = $1[0m  [["id", 5]]
+  [1m[35m (19.1ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/movies
+Completed 302 Found in 27ms (ActiveRecord: 20.3ms)
+
+
+Started GET "/movies" for 127.0.0.1 at 2016-11-23 21:20:43 -0600
+Processing by MoviesController#index as HTML
+  Rendering movies/index.html.erb within layouts/application
+  [1m[36mMovie Load (0.4ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 1]]
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 6]]
+  Rendered movies/index.html.erb within layouts/application (9.1ms)
+Completed 200 OK in 41ms (Views: 38.0ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/movies/new" for 127.0.0.1 at 2016-11-23 21:20:46 -0600
+Processing by MoviesController#new as HTML
+  Rendering movies/new.html.erb within layouts/application
+  [1m[36mTag Load (0.6ms)[0m  [1m[34mSELECT "tags".* FROM "tags"[0m
+  Rendered movies/_form.html.erb (6.7ms)
+  Rendered movies/new.html.erb within layouts/application (8.9ms)
+Completed 200 OK in 49ms (Views: 45.9ms | ActiveRecord: 0.6ms)
+
+
+Started POST "/movies" for 127.0.0.1 at 2016-11-23 21:20:53 -0600
+Processing by MoviesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"gsvDIx/DuUh7iEPZ9us6nJElNKSIaG3xPscKqfph0V0h1mzxj3dPnxSqUY/gKtYlMmGgq1IMcZ4W0Gw/rz01OQ==", "movie"=>{"name"=>"pelicula 2", "tags_ids"=>["", "1"]}, "commit"=>"Create Movie"}
+  [1m[36mTag Load (1.0ms)[0m  [1m[34mSELECT "tags".* FROM "tags" WHERE "tags"."id" IN (NULL, 1)[0m
+Completed 404 Not Found in 7ms (ActiveRecord: 1.0ms)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find all Tags with 'id': (, 1) (found 1 results, but was looking for 2)):
+  
+app/controllers/movies_controller.rb:29:in `create'
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (3.8ms)
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.6ms)
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.1ms)
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (21.0ms)
+Started POST "/movies" for 127.0.0.1 at 2016-11-23 21:23:54 -0600
+Processing by MoviesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"gsvDIx/DuUh7iEPZ9us6nJElNKSIaG3xPscKqfph0V0h1mzxj3dPnxSqUY/gKtYlMmGgq1IMcZ4W0Gw/rz01OQ==", "movie"=>{"name"=>"pelicula 2", "tags_ids"=>["", "1"]}, "commit"=>"Create Movie"}
+Completed 500 Internal Server Error in 15ms (ActiveRecord: 0.0ms)
+
+
+  
+NoMethodError (undefined method `empty' for "":String
+Did you mean?  empty?):
+  
+app/controllers/movies_controller.rb:29:in `block in create'
+app/controllers/movies_controller.rb:29:in `delete_if'
+app/controllers/movies_controller.rb:29:in `create'
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (4.1ms)
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.8ms)
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.0ms)
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (22.0ms)
+Started POST "/movies" for 127.0.0.1 at 2016-11-23 21:24:22 -0600
+Processing by MoviesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"gsvDIx/DuUh7iEPZ9us6nJElNKSIaG3xPscKqfph0V0h1mzxj3dPnxSqUY/gKtYlMmGgq1IMcZ4W0Gw/rz01OQ==", "movie"=>{"name"=>"pelicula 2", "tags_ids"=>["", "1"]}, "commit"=>"Create Movie"}
+  [1m[36mTag Load (0.6ms)[0m  [1m[34mSELECT "tags".* FROM "tags" WHERE "tags"."id" IN (NULL, 1)[0m
+Completed 404 Not Found in 32ms (ActiveRecord: 0.6ms)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find all Tags with 'id': (, 1) (found 1 results, but was looking for 2)):
+  
+app/controllers/movies_controller.rb:30:in `create'
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (3.2ms)
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.6ms)
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.9ms)
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (19.1ms)
+Started POST "/movies" for 127.0.0.1 at 2016-11-23 21:25:48 -0600
+Processing by MoviesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"gsvDIx/DuUh7iEPZ9us6nJElNKSIaG3xPscKqfph0V0h1mzxj3dPnxSqUY/gKtYlMmGgq1IMcZ4W0Gw/rz01OQ==", "movie"=>{"name"=>"pelicula 2", "tags_ids"=>["", "1"]}, "commit"=>"Create Movie"}
+  [1m[36mTag Load (0.5ms)[0m  [1m[34mSELECT  "tags".* FROM "tags" WHERE "tags"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "movies" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "pelicula 2"], ["created_at", 2016-11-24 03:25:48 UTC], ["updated_at", 2016-11-24 03:25:48 UTC]]
+  [1m[35m (15.5ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/movies/7
+Completed 302 Found in 53ms (ActiveRecord: 16.8ms)
+
+
+Started GET "/movies/7" for 127.0.0.1 at 2016-11-23 21:25:48 -0600
+Processing by MoviesController#show as HTML
+  Parameters: {"id"=>"7"}
+  [1m[36mMovie Load (0.5ms)[0m  [1m[34mSELECT  "movies".* FROM "movies" WHERE "movies"."id" = $1 LIMIT $2[0m  [["id", 7], ["LIMIT", 1]]
+  Rendering movies/show.html.erb within layouts/application
+  Rendered movies/show.html.erb within layouts/application (0.7ms)
+Completed 200 OK in 24ms (Views: 21.0ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/movies" for 127.0.0.1 at 2016-11-23 21:25:50 -0600
+Processing by MoviesController#index as HTML
+  Rendering movies/index.html.erb within layouts/application
+  [1m[36mMovie Load (0.5ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 1]]
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 6]]
+  [1m[36mTag Load (0.2ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 7]]
+  Rendered movies/index.html.erb within layouts/application (14.0ms)
+Completed 200 OK in 41ms (Views: 37.1ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/movies/new" for 127.0.0.1 at 2016-11-23 21:25:54 -0600
+Processing by MoviesController#new as HTML
+  Rendering movies/new.html.erb within layouts/application
+  [1m[36mTag Load (0.4ms)[0m  [1m[34mSELECT "tags".* FROM "tags"[0m
+  Rendered movies/_form.html.erb (6.1ms)
+  Rendered movies/new.html.erb within layouts/application (7.5ms)
+Completed 200 OK in 35ms (Views: 32.6ms | ActiveRecord: 0.4ms)
+
+
+Started POST "/movies" for 127.0.0.1 at 2016-11-23 21:25:59 -0600
+Processing by MoviesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"HbxePz3lJJx5GH0gwj/7xfSEYglXDua36EQ/hfbJx+u+ofHtrVHSSxY6b3bU/hd8V8D2Bo1q+tjAU1kTo5Ujjw==", "movie"=>{"name"=>"accion", "tags_ids"=>["", "1"]}, "commit"=>"Create Movie"}
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT  "tags".* FROM "tags" WHERE "tags"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "movies" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "accion"], ["created_at", 2016-11-24 03:25:59 UTC], ["updated_at", 2016-11-24 03:25:59 UTC]]
+  [1m[35m (59.4ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/movies/8
+Completed 302 Found in 66ms (ActiveRecord: 60.1ms)
+
+
+Started GET "/movies/8" for 127.0.0.1 at 2016-11-23 21:25:59 -0600
+Processing by MoviesController#show as HTML
+  Parameters: {"id"=>"8"}
+  [1m[36mMovie Load (0.3ms)[0m  [1m[34mSELECT  "movies".* FROM "movies" WHERE "movies"."id" = $1 LIMIT $2[0m  [["id", 8], ["LIMIT", 1]]
+  Rendering movies/show.html.erb within layouts/application
+  Rendered movies/show.html.erb within layouts/application (0.6ms)
+Completed 200 OK in 17ms (Views: 14.9ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/movies" for 127.0.0.1 at 2016-11-23 21:26:01 -0600
+Processing by MoviesController#index as HTML
+  Rendering movies/index.html.erb within layouts/application
+  [1m[36mMovie Load (0.6ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  [1m[36mTag Load (0.5ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 1]]
+  [1m[36mTag Load (0.5ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 6]]
+  [1m[36mTag Load (0.5ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 7]]
+  [1m[36mTag Load (0.2ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 8]]
+  Rendered movies/index.html.erb within layouts/application (15.7ms)
+Completed 200 OK in 39ms (Views: 34.9ms | ActiveRecord: 2.3ms)
+
+
+Started GET "/movies/new" for 127.0.0.1 at 2016-11-23 21:27:55 -0600
+Processing by MoviesController#new as HTML
+  Rendering movies/new.html.erb within layouts/application
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags"[0m
+  Rendered movies/_form.html.erb (44.6ms)
+  Rendered movies/new.html.erb within layouts/application (46.3ms)
+Completed 200 OK in 75ms (Views: 73.4ms | ActiveRecord: 0.3ms)
+
+
+Started POST "/movies" for 127.0.0.1 at 2016-11-23 21:28:00 -0600
+Processing by MoviesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"VmNTx3VTKrLGvHAlOFt1rNG+GfiOxGTiXZiZn5Xpvh/1fvwV5efcZameYnMumpkVcvqN91SgeI11j/8JwLVaew==", "movie"=>{"name"=>"ben", "tags_ids"=>["", "1"]}, "commit"=>"Create Movie"}
+  [1m[36mTag Load (0.8ms)[0m  [1m[34mSELECT  "tags".* FROM "tags" WHERE "tags"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "movies" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "ben"], ["created_at", 2016-11-24 03:28:00 UTC], ["updated_at", 2016-11-24 03:28:00 UTC]]
+  [1m[35m (64.3ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/movies/9
+Completed 302 Found in 76ms (ActiveRecord: 65.8ms)
+
+
+Started GET "/movies/9" for 127.0.0.1 at 2016-11-23 21:28:01 -0600
+Processing by MoviesController#show as HTML
+  Parameters: {"id"=>"9"}
+  [1m[36mMovie Load (0.5ms)[0m  [1m[34mSELECT  "movies".* FROM "movies" WHERE "movies"."id" = $1 LIMIT $2[0m  [["id", 9], ["LIMIT", 1]]
+  Rendering movies/show.html.erb within layouts/application
+  Rendered movies/show.html.erb within layouts/application (0.9ms)
+Completed 200 OK in 26ms (Views: 23.2ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/movies" for 127.0.0.1 at 2016-11-23 21:28:03 -0600
+Processing by MoviesController#index as HTML
+  Rendering movies/index.html.erb within layouts/application
+  [1m[36mMovie Load (0.5ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  [1m[36mTag Load (0.4ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 1]]
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 6]]
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 7]]
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 8]]
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 9]]
+  Rendered movies/index.html.erb within layouts/application (18.3ms)
+Completed 200 OK in 47ms (Views: 43.0ms | ActiveRecord: 2.1ms)
+
+
+Started DELETE "/movies/6" for 127.0.0.1 at 2016-11-23 21:28:07 -0600
+Processing by MoviesController#destroy as HTML
+  Parameters: {"authenticity_token"=>"tNnr8hnqjj4eGXPgZEPliYdV5G/aK2Oio5kpL6e5NGbMuIPSfjyOL1chRBQQEpatB+nFxVCvVVQz4Ru5VUd4PA==", "id"=>"6"}
+  [1m[36mMovie Load (0.4ms)[0m  [1m[34mSELECT  "movies".* FROM "movies" WHERE "movies"."id" = $1 LIMIT $2[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[31mDELETE FROM "movies_tags" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 6]]
+  [1m[35mSQL (0.4ms)[0m  [1m[31mDELETE FROM "movies" WHERE "movies"."id" = $1[0m  [["id", 6]]
+  [1m[35m (23.4ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/movies
+Completed 302 Found in 30ms (ActiveRecord: 24.7ms)
+
+
+Started GET "/movies" for 127.0.0.1 at 2016-11-23 21:28:07 -0600
+Processing by MoviesController#index as HTML
+  Rendering movies/index.html.erb within layouts/application
+  [1m[36mMovie Load (0.4ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  [1m[36mTag Load (0.2ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 1]]
+  [1m[36mTag Load (0.2ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 7]]
+  [1m[36mTag Load (0.2ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 8]]
+  [1m[36mTag Load (0.2ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 9]]
+  Rendered movies/index.html.erb within layouts/application (10.3ms)
+Completed 200 OK in 30ms (Views: 28.0ms | ActiveRecord: 1.2ms)
+
+
+Started DELETE "/movies/7" for 127.0.0.1 at 2016-11-23 21:28:10 -0600
+Processing by MoviesController#destroy as HTML
+  Parameters: {"authenticity_token"=>"8MGSyLgYJeaffTnivryg2PDbpyXd4rNfYk+5GetLx5mIoPro384l99ZFDhbK7dP8cGeGj1dmhanyN4uPGbWLww==", "id"=>"7"}
+  [1m[36mMovie Load (0.5ms)[0m  [1m[34mSELECT  "movies".* FROM "movies" WHERE "movies"."id" = $1 LIMIT $2[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[31mDELETE FROM "movies_tags" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 7]]
+  [1m[35mSQL (0.4ms)[0m  [1m[31mDELETE FROM "movies" WHERE "movies"."id" = $1[0m  [["id", 7]]
+  [1m[35m (24.1ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/movies
+Completed 302 Found in 31ms (ActiveRecord: 25.6ms)
+
+
+Started GET "/movies" for 127.0.0.1 at 2016-11-23 21:28:10 -0600
+Processing by MoviesController#index as HTML
+  Rendering movies/index.html.erb within layouts/application
+  [1m[36mMovie Load (0.5ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  [1m[36mTag Load (0.4ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 1]]
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 8]]
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 9]]
+  Rendered movies/index.html.erb within layouts/application (8.8ms)
+Completed 200 OK in 29ms (Views: 26.6ms | ActiveRecord: 1.5ms)
+
+
+Started DELETE "/movies/8" for 127.0.0.1 at 2016-11-23 21:28:12 -0600
+Processing by MoviesController#destroy as HTML
+  Parameters: {"authenticity_token"=>"CuNQt6wUSRFiCF0CMwaSZSZPQZSZYn2MaDPXMuwZEEZygjiXy8JJACswavZHV+FBpvNgPhPmS3r4S+WkHudcHA==", "id"=>"8"}
+  [1m[36mMovie Load (0.4ms)[0m  [1m[34mSELECT  "movies".* FROM "movies" WHERE "movies"."id" = $1 LIMIT $2[0m  [["id", 8], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[31mDELETE FROM "movies_tags" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 8]]
+  [1m[35mSQL (0.4ms)[0m  [1m[31mDELETE FROM "movies" WHERE "movies"."id" = $1[0m  [["id", 8]]
+  [1m[35m (12.7ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/movies
+Completed 302 Found in 19ms (ActiveRecord: 14.1ms)
+
+
+Started GET "/movies" for 127.0.0.1 at 2016-11-23 21:28:12 -0600
+Processing by MoviesController#index as HTML
+  Rendering movies/index.html.erb within layouts/application
+  [1m[36mMovie Load (0.4ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  [1m[36mTag Load (0.4ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 1]]
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 9]]
+  Rendered movies/index.html.erb within layouts/application (7.1ms)
+Completed 200 OK in 31ms (Views: 29.0ms | ActiveRecord: 1.0ms)
+
+
+Started DELETE "/movies/9" for 127.0.0.1 at 2016-11-23 21:28:15 -0600
+Processing by MoviesController#destroy as HTML
+  Parameters: {"authenticity_token"=>"4olkREx0VYu4NckncTS2XMbxkdDo4BMu9O/bNDAUCVea6AxkK6JVmvEN/tMFZcV4Rk2wemJkJdhkl+miwupFDQ==", "id"=>"9"}
+  [1m[36mMovie Load (0.4ms)[0m  [1m[34mSELECT  "movies".* FROM "movies" WHERE "movies"."id" = $1 LIMIT $2[0m  [["id", 9], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[31mDELETE FROM "movies_tags" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 9]]
+  [1m[35mSQL (0.3ms)[0m  [1m[31mDELETE FROM "movies" WHERE "movies"."id" = $1[0m  [["id", 9]]
+  [1m[35m (20.9ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/movies
+Completed 302 Found in 26ms (ActiveRecord: 22.0ms)
+
+
+Started GET "/movies" for 127.0.0.1 at 2016-11-23 21:28:15 -0600
+Processing by MoviesController#index as HTML
+  Rendering movies/index.html.erb within layouts/application
+  [1m[36mMovie Load (0.3ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  [1m[36mTag Load (0.2ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 1]]
+  Rendered movies/index.html.erb within layouts/application (3.5ms)
+Completed 200 OK in 23ms (Views: 21.3ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/movies/new" for 127.0.0.1 at 2016-11-23 21:28:17 -0600
+Processing by MoviesController#new as HTML
+  Rendering movies/new.html.erb within layouts/application
+  [1m[36mTag Load (0.5ms)[0m  [1m[34mSELECT "tags".* FROM "tags"[0m
+  Rendered movies/_form.html.erb (6.0ms)
+  Rendered movies/new.html.erb within layouts/application (8.0ms)
+Completed 200 OK in 43ms (Views: 40.0ms | ActiveRecord: 0.5ms)
+
+
+Started POST "/movies" for 127.0.0.1 at 2016-11-23 21:31:07 -0600
+Processing by MoviesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"XKtJ2xZJ3vw9jHAkbru16TrE8ZNvnCJKL89ETosjKbf/tuYJhv0oK1KuYnJ4ellQmYBlnLX4PiUH2CLY3n/N0w==", "movie"=>{"name"=>"terrible", "tags_ids"=>["", "2"]}, "commit"=>"Create Movie"}
+  [1m[36mTag Load (0.6ms)[0m  [1m[34mSELECT  "tags".* FROM "tags" WHERE "tags"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "movies" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "terrible"], ["created_at", 2016-11-24 03:31:07 UTC], ["updated_at", 2016-11-24 03:31:07 UTC]]
+  [1m[35m (36.1ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/movies/10
+Completed 302 Found in 48ms (ActiveRecord: 37.4ms)
+
+
+Started GET "/movies/10" for 127.0.0.1 at 2016-11-23 21:31:07 -0600
+Processing by MoviesController#show as HTML
+  Parameters: {"id"=>"10"}
+  [1m[36mMovie Load (0.4ms)[0m  [1m[34mSELECT  "movies".* FROM "movies" WHERE "movies"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  Rendering movies/show.html.erb within layouts/application
+  Rendered movies/show.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 21ms (Views: 19.3ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/movies" for 127.0.0.1 at 2016-11-23 21:31:09 -0600
+Processing by MoviesController#index as HTML
+  Rendering movies/index.html.erb within layouts/application
+  [1m[36mMovie Load (0.4ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 1]]
+  [1m[36mTag Load (0.4ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 10]]
+  Rendered movies/index.html.erb within layouts/application (9.5ms)
+Completed 200 OK in 38ms (Views: 34.9ms | ActiveRecord: 1.2ms)
+
+
+Started DELETE "/movies/10" for 127.0.0.1 at 2016-11-23 21:31:25 -0600
+Processing by MoviesController#destroy as HTML
+  Parameters: {"authenticity_token"=>"pyakfBAYnW5YPiGoLYB2sc4Oq3pHQHpPTyk13cHO1GXfR8xcd86dfxEGFlxZ0QWVTrKK0M3ETLnfUQdLMzCYPw==", "id"=>"10"}
+  [1m[36mMovie Load (0.4ms)[0m  [1m[34mSELECT  "movies".* FROM "movies" WHERE "movies"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[31mDELETE FROM "movies_tags" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 10]]
+  [1m[35mSQL (0.4ms)[0m  [1m[31mDELETE FROM "movies" WHERE "movies"."id" = $1[0m  [["id", 10]]
+  [1m[35m (22.6ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/movies
+Completed 302 Found in 29ms (ActiveRecord: 24.1ms)
+
+
+Started GET "/movies" for 127.0.0.1 at 2016-11-23 21:31:25 -0600
+Processing by MoviesController#index as HTML
+  Rendering movies/index.html.erb within layouts/application
+  [1m[36mMovie Load (0.4ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 1]]
+  Rendered movies/index.html.erb within layouts/application (4.8ms)
+Completed 200 OK in 30ms (Views: 28.0ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/movies/new" for 127.0.0.1 at 2016-11-23 21:31:27 -0600
+Processing by MoviesController#new as HTML
+  Rendering movies/new.html.erb within layouts/application
+  [1m[36mTag Load (0.5ms)[0m  [1m[34mSELECT "tags".* FROM "tags"[0m
+  Rendered movies/_form.html.erb (5.4ms)
+  Rendered movies/new.html.erb within layouts/application (7.1ms)
+Completed 200 OK in 49ms (Views: 46.2ms | ActiveRecord: 0.5ms)
+
+
+Started POST "/movies" for 127.0.0.1 at 2016-11-23 21:31:36 -0600
+Processing by MoviesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"UEadX2d9LIwDjZHqFVhLynMVUblx4goNQRKMQGLSkqLzWzKN98naW2yvg7wDmadz0FHFtquGFmJpBerWN452xg==", "movie"=>{"name"=>"ninja", "tags_ids"=>["", "1", "2"]}, "commit"=>"Create Movie"}
+  [1m[36mTag Load (0.8ms)[0m  [1m[34mSELECT "tags".* FROM "tags" WHERE "tags"."id" IN (1, 2)[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "movies" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "ninja"], ["created_at", 2016-11-24 03:31:36 UTC], ["updated_at", 2016-11-24 03:31:36 UTC]]
+  [1m[35m (45.0ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/movies/11
+Completed 302 Found in 59ms (ActiveRecord: 46.7ms)
+
+
+Started GET "/movies/11" for 127.0.0.1 at 2016-11-23 21:31:36 -0600
+Processing by MoviesController#show as HTML
+  Parameters: {"id"=>"11"}
+  [1m[36mMovie Load (0.4ms)[0m  [1m[34mSELECT  "movies".* FROM "movies" WHERE "movies"."id" = $1 LIMIT $2[0m  [["id", 11], ["LIMIT", 1]]
+  Rendering movies/show.html.erb within layouts/application
+  Rendered movies/show.html.erb within layouts/application (0.9ms)
+Completed 200 OK in 25ms (Views: 23.4ms | ActiveRecord: 0.4ms)
+
+
+  [1m[36mMovie Load (0.5ms)[0m  [1m[34mSELECT  "movies".* FROM "movies" WHERE "movies"."id" = $1 LIMIT $2[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[36mMovie Load (0.5ms)[0m  [1m[34mSELECT  "movies".* FROM "movies" ORDER BY "movies"."id" DESC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[36mTag Load (0.7ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 11]]
+Started GET "/movies" for 127.0.0.1 at 2016-11-23 21:35:02 -0600
+Processing by MoviesController#index as HTML
+  Rendering movies/index.html.erb within layouts/application
+  [1m[36mMovie Load (0.3ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  [1m[36mTag Load (0.2ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 1]]
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 11]]
+  Rendered movies/index.html.erb within layouts/application (18.7ms)
+Completed 200 OK in 42ms (Views: 34.1ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/movies/new" for 127.0.0.1 at 2016-11-23 21:35:04 -0600
+Processing by MoviesController#new as HTML
+  Rendering movies/new.html.erb within layouts/application
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags"[0m
+  Rendered movies/_form.html.erb (4.4ms)
+  Rendered movies/new.html.erb within layouts/application (5.6ms)
+Completed 200 OK in 28ms (Views: 26.4ms | ActiveRecord: 0.3ms)
+
+
+Started POST "/movies" for 127.0.0.1 at 2016-11-23 21:35:12 -0600
+Processing by MoviesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"M/95wXlDc8R7X27FowYbNIdenocX5Wv85Va1esZg8VGQ4tYT6feFExR9fJO1x/eNJBoKiM2Bd5PNQdPskzwVNQ==", "movie"=>{"name"=>"pelicula 2", "tags_ids"=>["", "1", "2"]}, "commit"=>"Create Movie"}
+  [1m[36mTag Load (0.8ms)[0m  [1m[34mSELECT "tags".* FROM "tags" WHERE "tags"."id" IN (1, 2)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "movies" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "pelicula 2"], ["created_at", 2016-11-24 03:35:12 UTC], ["updated_at", 2016-11-24 03:35:12 UTC]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "movies_tags" ("movie_id", "tag_id") VALUES ($1, $2)[0m  [["movie_id", 12], ["tag_id", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "movies_tags" ("movie_id", "tag_id") VALUES ($1, $2)[0m  [["movie_id", 12], ["tag_id", 2]]
+  [1m[35m (39.5ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/movies/12
+Completed 302 Found in 65ms (ActiveRecord: 44.3ms)
+
+
+Started GET "/movies/12" for 127.0.0.1 at 2016-11-23 21:35:12 -0600
+Processing by MoviesController#show as HTML
+  Parameters: {"id"=>"12"}
+  [1m[36mMovie Load (0.5ms)[0m  [1m[34mSELECT  "movies".* FROM "movies" WHERE "movies"."id" = $1 LIMIT $2[0m  [["id", 12], ["LIMIT", 1]]
+  Rendering movies/show.html.erb within layouts/application
+  Rendered movies/show.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 33ms (Views: 29.9ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/movies" for 127.0.0.1 at 2016-11-23 21:35:14 -0600
+Processing by MoviesController#index as HTML
+  Rendering movies/index.html.erb within layouts/application
+  [1m[36mMovie Load (0.4ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 1]]
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 11]]
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 12]]
+  Rendered movies/index.html.erb within layouts/application (14.1ms)
+Completed 200 OK in 42ms (Views: 38.6ms | ActiveRecord: 1.3ms)
+
+
+Started DELETE "/movies/11" for 127.0.0.1 at 2016-11-23 21:35:29 -0600
+Processing by MoviesController#destroy as HTML
+  Parameters: {"authenticity_token"=>"ZZXHDLojNlQyqEDrrwZfkGKhLLXmMSR20jFfE71kvokd9K8s3fU2RXuQdx/bVyy04h0NH2y1EoBCSW2FT5ry0w==", "id"=>"11"}
+  [1m[36mMovie Load (0.4ms)[0m  [1m[34mSELECT  "movies".* FROM "movies" WHERE "movies"."id" = $1 LIMIT $2[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[31mDELETE FROM "movies_tags" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 11]]
+  [1m[35mSQL (0.5ms)[0m  [1m[31mDELETE FROM "movies" WHERE "movies"."id" = $1[0m  [["id", 11]]
+  [1m[35m (13.1ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/movies
+Completed 302 Found in 20ms (ActiveRecord: 14.6ms)
+
+
+Started GET "/movies" for 127.0.0.1 at 2016-11-23 21:35:29 -0600
+Processing by MoviesController#index as HTML
+  Rendering movies/index.html.erb within layouts/application
+  [1m[36mMovie Load (0.3ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  [1m[36mTag Load (0.4ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 1]]
+  [1m[36mTag Load (0.2ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 12]]
+  Rendered movies/index.html.erb within layouts/application (6.8ms)
+Completed 200 OK in 32ms (Views: 29.6ms | ActiveRecord: 0.9ms)
+
+
+Started GET "/movies/12/edit" for 127.0.0.1 at 2016-11-23 21:37:15 -0600
+Processing by MoviesController#edit as HTML
+  Parameters: {"id"=>"12"}
+  [1m[36mMovie Load (0.4ms)[0m  [1m[34mSELECT  "movies".* FROM "movies" WHERE "movies"."id" = $1 LIMIT $2[0m  [["id", 12], ["LIMIT", 1]]
+  Rendering movies/edit.html.erb within layouts/application
+  [1m[36mTag Load (0.4ms)[0m  [1m[34mSELECT "tags".* FROM "tags"[0m
+  Rendered movies/_form.html.erb (5.5ms)
+  Rendered movies/edit.html.erb within layouts/application (7.3ms)
+Completed 200 OK in 36ms (Views: 33.0ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/movies" for 127.0.0.1 at 2016-11-23 21:41:54 -0600
+Processing by MoviesController#index as HTML
+  Rendering movies/index.html.erb within layouts/application
+  [1m[36mMovie Load (0.4ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 1]]
+  [1m[36mTag Load (0.2ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 12]]
+  Rendered movies/index.html.erb within layouts/application (24.4ms)
+Completed 200 OK in 52ms (Views: 44.2ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/movies/12/edit" for 127.0.0.1 at 2016-11-23 21:41:59 -0600
+Processing by MoviesController#edit as HTML
+  Parameters: {"id"=>"12"}
+  [1m[36mMovie Load (0.5ms)[0m  [1m[34mSELECT  "movies".* FROM "movies" WHERE "movies"."id" = $1 LIMIT $2[0m  [["id", 12], ["LIMIT", 1]]
+  Rendering movies/edit.html.erb within layouts/application
+  [1m[36mTag Load (0.6ms)[0m  [1m[34mSELECT "tags".* FROM "tags"[0m
+  Rendered movies/_form.html.erb (6.0ms)
+  Rendered movies/edit.html.erb within layouts/application (8.0ms)
+Completed 200 OK in 39ms (Views: 33.9ms | ActiveRecord: 1.1ms)
+
+
+Started PATCH "/movies/12" for 127.0.0.1 at 2016-11-23 21:42:01 -0600
+Processing by MoviesController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"TVV2j7cdOCPaR0CELiyYQXuDpb6ckzyh/ED8c67XrPedv4VNf3lUSJ3JwbajjP3dV/ulooDk26lLZD1lkY6OgQ==", "movie"=>{"name"=>"pelicula 2", "tags_ids"=>["", "2"]}, "commit"=>"Update Movie", "id"=>"12"}
+  [1m[36mMovie Load (0.3ms)[0m  [1m[34mSELECT  "movies".* FROM "movies" WHERE "movies"."id" = $1 LIMIT $2[0m  [["id", 12], ["LIMIT", 1]]
+Completed 500 Internal Server Error in 83ms (ActiveRecord: 0.3ms)
+
+
+  
+NameError (undefined local variable or method `tags_ids' for #<MoviesController:0x007f92464397e0>
+Did you mean?  tags_url):
+  
+app/controllers/movies_controller.rb:49:in `block in update'
+app/controllers/movies_controller.rb:48:in `update'
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (3.7ms)
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.6ms)
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.2ms)
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (55.9ms)
+Started PATCH "/movies/12" for 127.0.0.1 at 2016-11-23 21:43:10 -0600
+Processing by MoviesController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"TVV2j7cdOCPaR0CELiyYQXuDpb6ckzyh/ED8c67XrPedv4VNf3lUSJ3JwbajjP3dV/ulooDk26lLZD1lkY6OgQ==", "movie"=>{"name"=>"pelicula 2", "tags_ids"=>["", "2"]}, "commit"=>"Update Movie", "id"=>"12"}
+  [1m[36mMovie Load (0.4ms)[0m  [1m[34mSELECT  "movies".* FROM "movies" WHERE "movies"."id" = $1 LIMIT $2[0m  [["id", 12], ["LIMIT", 1]]
+Completed 500 Internal Server Error in 80ms (ActiveRecord: 0.4ms)
+
+
+  
+NameError (undefined local variable or method `tags_ids' for #<MoviesController:0x007f92344d2178>
+Did you mean?  tags_url):
+  
+app/controllers/movies_controller.rb:49:in `block in update'
+app/controllers/movies_controller.rb:48:in `update'
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (4.7ms)
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.0ms)
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.3ms)
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (51.2ms)
+Started PATCH "/movies/12" for 127.0.0.1 at 2016-11-23 21:48:29 -0600
+Processing by MoviesController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"TVV2j7cdOCPaR0CELiyYQXuDpb6ckzyh/ED8c67XrPedv4VNf3lUSJ3JwbajjP3dV/ulooDk26lLZD1lkY6OgQ==", "movie"=>{"name"=>"pelicula 2", "tags_ids"=>["", "2"]}, "commit"=>"Update Movie", "id"=>"12"}
+  [1m[36mMovie Load (0.3ms)[0m  [1m[34mSELECT  "movies".* FROM "movies" WHERE "movies"."id" = $1 LIMIT $2[0m  [["id", 12], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/movies/12
+Completed 302 Found in 17ms (ActiveRecord: 0.6ms)
+
+
+Started GET "/movies/12" for 127.0.0.1 at 2016-11-23 21:48:29 -0600
+Processing by MoviesController#show as HTML
+  Parameters: {"id"=>"12"}
+  [1m[36mMovie Load (0.3ms)[0m  [1m[34mSELECT  "movies".* FROM "movies" WHERE "movies"."id" = $1 LIMIT $2[0m  [["id", 12], ["LIMIT", 1]]
+  Rendering movies/show.html.erb within layouts/application
+  Rendered movies/show.html.erb within layouts/application (0.9ms)
+Completed 200 OK in 28ms (Views: 26.4ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/movies" for 127.0.0.1 at 2016-11-23 21:48:36 -0600
+Processing by MoviesController#index as HTML
+  Rendering movies/index.html.erb within layouts/application
+  [1m[36mMovie Load (0.4ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 1]]
+  [1m[36mTag Load (0.2ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 12]]
+  Rendered movies/index.html.erb within layouts/application (39.0ms)
+Completed 200 OK in 72ms (Views: 62.9ms | ActiveRecord: 7.5ms)
+
+
+Started GET "/movies/1/delete_tag/2" for 127.0.0.1 at 2016-11-23 21:48:39 -0600
+  
+AbstractController::ActionNotFound (The action 'delete_tag' could not be found for MoviesController):
+  
+actionpack (5.0.0.1) lib/abstract_controller/base.rb:121:in `process'
+actionview (5.0.0.1) lib/action_view/rendering.rb:30:in `process'
+actionpack (5.0.0.1) lib/action_controller/metal.rb:190:in `dispatch'
+actionpack (5.0.0.1) lib/action_controller/metal.rb:262:in `dispatch'
+actionpack (5.0.0.1) lib/action_dispatch/routing/route_set.rb:50:in `dispatch'
+actionpack (5.0.0.1) lib/action_dispatch/routing/route_set.rb:32:in `serve'
+actionpack (5.0.0.1) lib/action_dispatch/journey/router.rb:39:in `block in serve'
+actionpack (5.0.0.1) lib/action_dispatch/journey/router.rb:26:in `each'
+actionpack (5.0.0.1) lib/action_dispatch/journey/router.rb:26:in `serve'
+actionpack (5.0.0.1) lib/action_dispatch/routing/route_set.rb:725:in `call'
+rack (2.0.1) lib/rack/etag.rb:25:in `call'
+rack (2.0.1) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.1) lib/rack/head.rb:12:in `call'
+rack (2.0.1) lib/rack/session/abstract/id.rb:222:in `context'
+rack (2.0.1) lib/rack/session/abstract/id.rb:216:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/cookies.rb:613:in `call'
+activerecord (5.0.0.1) lib/active_record/migration.rb:552:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/callbacks.rb:38:in `block in call'
+activesupport (5.0.0.1) lib/active_support/callbacks.rb:97:in `__run_callbacks__'
+activesupport (5.0.0.1) lib/active_support/callbacks.rb:750:in `_run_call_callbacks'
+activesupport (5.0.0.1) lib/active_support/callbacks.rb:90:in `run_callbacks'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/callbacks.rb:36:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/debug_exceptions.rb:49:in `call'
+web-console (3.4.0) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.4.0) lib/web_console/middleware.rb:28:in `block in call'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.0.0.1) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.0.0.1) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:70:in `block in tagged'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:70:in `tagged'
+railties (5.0.0.1) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.0) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/request_id.rb:24:in `call'
+rack (2.0.1) lib/rack/method_override.rb:22:in `call'
+rack (2.0.1) lib/rack/runtime.rb:22:in `call'
+activesupport (5.0.0.1) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/static.rb:136:in `call'
+rack (2.0.1) lib/rack/sendfile.rb:111:in `call'
+railties (5.0.0.1) lib/rails/engine.rb:522:in `call'
+puma (3.6.2) lib/puma/configuration.rb:225:in `call'
+puma (3.6.2) lib/puma/server.rb:578:in `handle_request'
+puma (3.6.2) lib/puma/server.rb:415:in `process_client'
+puma (3.6.2) lib/puma/server.rb:275:in `block in run'
+puma (3.6.2) lib/puma/thread_pool.rb:116:in `block in spawn_thread'
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/unknown_action.html.erb within rescues/layout
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/unknown_action.html.erb within rescues/layout (0.7ms)
+Started GET "/movies" for 127.0.0.1 at 2016-11-23 21:48:41 -0600
+Processing by MoviesController#index as HTML
+  Rendering movies/index.html.erb within layouts/application
+  [1m[36mMovie Load (0.4ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 1]]
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 12]]
+  Rendered movies/index.html.erb within layouts/application (10.4ms)
+Completed 200 OK in 41ms (Views: 38.3ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/movies" for 127.0.0.1 at 2016-11-23 21:50:23 -0600
+Processing by MoviesController#index as HTML
+  Rendering movies/index.html.erb within layouts/application
+  [1m[36mMovie Load (0.6ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  [1m[36mTag Load (0.4ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 1]]
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 12]]
+  Rendered movies/index.html.erb within layouts/application (37.2ms)
+Completed 200 OK in 82ms (Views: 72.0ms | ActiveRecord: 1.2ms)
+
+
+Started GET "/movies/12/delete_tag/2" for 127.0.0.1 at 2016-11-23 21:50:26 -0600
+  
+AbstractController::ActionNotFound (The action 'delete_tag' could not be found for MoviesController):
+  
+actionpack (5.0.0.1) lib/abstract_controller/base.rb:121:in `process'
+actionview (5.0.0.1) lib/action_view/rendering.rb:30:in `process'
+actionpack (5.0.0.1) lib/action_controller/metal.rb:190:in `dispatch'
+actionpack (5.0.0.1) lib/action_controller/metal.rb:262:in `dispatch'
+actionpack (5.0.0.1) lib/action_dispatch/routing/route_set.rb:50:in `dispatch'
+actionpack (5.0.0.1) lib/action_dispatch/routing/route_set.rb:32:in `serve'
+actionpack (5.0.0.1) lib/action_dispatch/journey/router.rb:39:in `block in serve'
+actionpack (5.0.0.1) lib/action_dispatch/journey/router.rb:26:in `each'
+actionpack (5.0.0.1) lib/action_dispatch/journey/router.rb:26:in `serve'
+actionpack (5.0.0.1) lib/action_dispatch/routing/route_set.rb:725:in `call'
+rack (2.0.1) lib/rack/etag.rb:25:in `call'
+rack (2.0.1) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.1) lib/rack/head.rb:12:in `call'
+rack (2.0.1) lib/rack/session/abstract/id.rb:222:in `context'
+rack (2.0.1) lib/rack/session/abstract/id.rb:216:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/cookies.rb:613:in `call'
+activerecord (5.0.0.1) lib/active_record/migration.rb:552:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/callbacks.rb:38:in `block in call'
+activesupport (5.0.0.1) lib/active_support/callbacks.rb:97:in `__run_callbacks__'
+activesupport (5.0.0.1) lib/active_support/callbacks.rb:750:in `_run_call_callbacks'
+activesupport (5.0.0.1) lib/active_support/callbacks.rb:90:in `run_callbacks'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/callbacks.rb:36:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/debug_exceptions.rb:49:in `call'
+web-console (3.4.0) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.4.0) lib/web_console/middleware.rb:28:in `block in call'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.0.0.1) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.0.0.1) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:70:in `block in tagged'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:70:in `tagged'
+railties (5.0.0.1) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.0) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/request_id.rb:24:in `call'
+rack (2.0.1) lib/rack/method_override.rb:22:in `call'
+rack (2.0.1) lib/rack/runtime.rb:22:in `call'
+activesupport (5.0.0.1) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/static.rb:136:in `call'
+rack (2.0.1) lib/rack/sendfile.rb:111:in `call'
+railties (5.0.0.1) lib/rails/engine.rb:522:in `call'
+puma (3.6.2) lib/puma/configuration.rb:225:in `call'
+puma (3.6.2) lib/puma/server.rb:578:in `handle_request'
+puma (3.6.2) lib/puma/server.rb:415:in `process_client'
+puma (3.6.2) lib/puma/server.rb:275:in `block in run'
+puma (3.6.2) lib/puma/thread_pool.rb:116:in `block in spawn_thread'
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/unknown_action.html.erb within rescues/layout
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/unknown_action.html.erb within rescues/layout (0.5ms)
+Started GET "/movies" for 127.0.0.1 at 2016-11-23 21:50:36 -0600
+Processing by MoviesController#index as HTML
+  Rendering movies/index.html.erb within layouts/application
+  [1m[36mMovie Load (0.5ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 1]]
+  [1m[36mTag Load (0.2ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 12]]
+  Rendered movies/index.html.erb within layouts/application (8.3ms)
+Completed 200 OK in 33ms (Views: 30.2ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/movies/1/delete_tag/2" for 127.0.0.1 at 2016-11-23 21:50:38 -0600
+  
+AbstractController::ActionNotFound (The action 'delete_tag' could not be found for MoviesController):
+  
+actionpack (5.0.0.1) lib/abstract_controller/base.rb:121:in `process'
+actionview (5.0.0.1) lib/action_view/rendering.rb:30:in `process'
+actionpack (5.0.0.1) lib/action_controller/metal.rb:190:in `dispatch'
+actionpack (5.0.0.1) lib/action_controller/metal.rb:262:in `dispatch'
+actionpack (5.0.0.1) lib/action_dispatch/routing/route_set.rb:50:in `dispatch'
+actionpack (5.0.0.1) lib/action_dispatch/routing/route_set.rb:32:in `serve'
+actionpack (5.0.0.1) lib/action_dispatch/journey/router.rb:39:in `block in serve'
+actionpack (5.0.0.1) lib/action_dispatch/journey/router.rb:26:in `each'
+actionpack (5.0.0.1) lib/action_dispatch/journey/router.rb:26:in `serve'
+actionpack (5.0.0.1) lib/action_dispatch/routing/route_set.rb:725:in `call'
+rack (2.0.1) lib/rack/etag.rb:25:in `call'
+rack (2.0.1) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.1) lib/rack/head.rb:12:in `call'
+rack (2.0.1) lib/rack/session/abstract/id.rb:222:in `context'
+rack (2.0.1) lib/rack/session/abstract/id.rb:216:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/cookies.rb:613:in `call'
+activerecord (5.0.0.1) lib/active_record/migration.rb:552:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/callbacks.rb:38:in `block in call'
+activesupport (5.0.0.1) lib/active_support/callbacks.rb:97:in `__run_callbacks__'
+activesupport (5.0.0.1) lib/active_support/callbacks.rb:750:in `_run_call_callbacks'
+activesupport (5.0.0.1) lib/active_support/callbacks.rb:90:in `run_callbacks'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/callbacks.rb:36:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/debug_exceptions.rb:49:in `call'
+web-console (3.4.0) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.4.0) lib/web_console/middleware.rb:28:in `block in call'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.0.0.1) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.0.0.1) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:70:in `block in tagged'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:70:in `tagged'
+railties (5.0.0.1) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.0) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/request_id.rb:24:in `call'
+rack (2.0.1) lib/rack/method_override.rb:22:in `call'
+rack (2.0.1) lib/rack/runtime.rb:22:in `call'
+activesupport (5.0.0.1) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/static.rb:136:in `call'
+rack (2.0.1) lib/rack/sendfile.rb:111:in `call'
+railties (5.0.0.1) lib/rails/engine.rb:522:in `call'
+puma (3.6.2) lib/puma/configuration.rb:225:in `call'
+puma (3.6.2) lib/puma/server.rb:578:in `handle_request'
+puma (3.6.2) lib/puma/server.rb:415:in `process_client'
+puma (3.6.2) lib/puma/server.rb:275:in `block in run'
+puma (3.6.2) lib/puma/thread_pool.rb:116:in `block in spawn_thread'
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/unknown_action.html.erb within rescues/layout
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/unknown_action.html.erb within rescues/layout (0.5ms)
+Started GET "/movies" for 127.0.0.1 at 2016-11-23 21:50:40 -0600
+Processing by MoviesController#index as HTML
+  Rendering movies/index.html.erb within layouts/application
+  [1m[36mMovie Load (0.4ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 1]]
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 12]]
+  Rendered movies/index.html.erb within layouts/application (9.6ms)
+Completed 200 OK in 44ms (Views: 40.6ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/movies/1/delete_tag/2" for 127.0.0.1 at 2016-11-23 21:50:44 -0600
+  
+AbstractController::ActionNotFound (The action 'delete_tag' could not be found for MoviesController):
+  
+actionpack (5.0.0.1) lib/abstract_controller/base.rb:121:in `process'
+actionview (5.0.0.1) lib/action_view/rendering.rb:30:in `process'
+actionpack (5.0.0.1) lib/action_controller/metal.rb:190:in `dispatch'
+actionpack (5.0.0.1) lib/action_controller/metal.rb:262:in `dispatch'
+actionpack (5.0.0.1) lib/action_dispatch/routing/route_set.rb:50:in `dispatch'
+actionpack (5.0.0.1) lib/action_dispatch/routing/route_set.rb:32:in `serve'
+actionpack (5.0.0.1) lib/action_dispatch/journey/router.rb:39:in `block in serve'
+actionpack (5.0.0.1) lib/action_dispatch/journey/router.rb:26:in `each'
+actionpack (5.0.0.1) lib/action_dispatch/journey/router.rb:26:in `serve'
+actionpack (5.0.0.1) lib/action_dispatch/routing/route_set.rb:725:in `call'
+rack (2.0.1) lib/rack/etag.rb:25:in `call'
+rack (2.0.1) lib/rack/conditional_get.rb:25:in `call'
+rack (2.0.1) lib/rack/head.rb:12:in `call'
+rack (2.0.1) lib/rack/session/abstract/id.rb:222:in `context'
+rack (2.0.1) lib/rack/session/abstract/id.rb:216:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/cookies.rb:613:in `call'
+activerecord (5.0.0.1) lib/active_record/migration.rb:552:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/callbacks.rb:38:in `block in call'
+activesupport (5.0.0.1) lib/active_support/callbacks.rb:97:in `__run_callbacks__'
+activesupport (5.0.0.1) lib/active_support/callbacks.rb:750:in `_run_call_callbacks'
+activesupport (5.0.0.1) lib/active_support/callbacks.rb:90:in `run_callbacks'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/callbacks.rb:36:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/debug_exceptions.rb:49:in `call'
+web-console (3.4.0) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.4.0) lib/web_console/middleware.rb:28:in `block in call'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `catch'
+web-console (3.4.0) lib/web_console/middleware.rb:18:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.0.0.1) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.0.0.1) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:70:in `block in tagged'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.0.0.1) lib/active_support/tagged_logging.rb:70:in `tagged'
+railties (5.0.0.1) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.0) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/request_id.rb:24:in `call'
+rack (2.0.1) lib/rack/method_override.rb:22:in `call'
+rack (2.0.1) lib/rack/runtime.rb:22:in `call'
+activesupport (5.0.0.1) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.0.0.1) lib/action_dispatch/middleware/static.rb:136:in `call'
+rack (2.0.1) lib/rack/sendfile.rb:111:in `call'
+railties (5.0.0.1) lib/rails/engine.rb:522:in `call'
+puma (3.6.2) lib/puma/configuration.rb:225:in `call'
+puma (3.6.2) lib/puma/server.rb:578:in `handle_request'
+puma (3.6.2) lib/puma/server.rb:415:in `process_client'
+puma (3.6.2) lib/puma/server.rb:275:in `block in run'
+puma (3.6.2) lib/puma/thread_pool.rb:116:in `block in spawn_thread'
+  Rendering /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/unknown_action.html.erb within rescues/layout
+  Rendered /var/lib/gems/2.3.0/gems/actionpack-5.0.0.1/lib/action_dispatch/middleware/templates/rescues/unknown_action.html.erb within rescues/layout (0.5ms)
+Started GET "/movies" for 127.0.0.1 at 2016-11-23 21:53:16 -0600
+Processing by MoviesController#index as HTML
+  Rendering movies/index.html.erb within layouts/application
+  [1m[36mMovie Load (0.5ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  [1m[36mTag Load (0.2ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 1]]
+  [1m[36mTag Load (0.2ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 12]]
+  Rendered movies/index.html.erb within layouts/application (24.0ms)
+Completed 200 OK in 51ms (Views: 43.7ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/movies/1/edit" for 127.0.0.1 at 2016-11-23 21:53:20 -0600
+Processing by MoviesController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mMovie Load (0.4ms)[0m  [1m[34mSELECT  "movies".* FROM "movies" WHERE "movies"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering movies/edit.html.erb within layouts/application
+  [1m[36mTag Load (0.5ms)[0m  [1m[34mSELECT "tags".* FROM "tags"[0m
+  Rendered movies/_form.html.erb (7.2ms)
+  Rendered movies/edit.html.erb within layouts/application (9.5ms)
+Completed 200 OK in 46ms (Views: 40.7ms | ActiveRecord: 0.8ms)
+
+
+Started PATCH "/movies/1" for 127.0.0.1 at 2016-11-23 21:53:25 -0600
+Processing by MoviesController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"WGg0G70TlcDv0cn6vWExOaQChWrLVZfVI5+jePHa0+groyJsImVbXc46IGLNwNoK98Q+/bKpgc4BZqRt+pr2rA==", "movie"=>{"name"=>"Terminator", "tags_ids"=>["", "1"]}, "commit"=>"Update Movie", "id"=>"1"}
+  [1m[36mMovie Load (0.4ms)[0m  [1m[34mSELECT  "movies".* FROM "movies" WHERE "movies"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTag Load (0.7ms)[0m  [1m[34mSELECT  "tags".* FROM "tags" WHERE "tags"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTag Load (0.4ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mHABTM_Tags Load (0.5ms)[0m  [1m[34mSELECT "movies_tags".* FROM "movies_tags" WHERE "movies_tags"."movie_id" = $1 AND "movies_tags"."tag_id" IN (1, 2)[0m  [["movie_id", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[31mDELETE FROM "movies_tags" WHERE "movies_tags"."movie_id" = $1 AND "movies_tags"."tag_id" IN (1, 2)[0m  [["movie_id", 1]]
+  [1m[35m (47.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "movies_tags" ("movie_id", "tag_id") VALUES ($1, $2)[0m  [["movie_id", 1], ["tag_id", 1]]
+  [1m[35m (66.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/movies/1
+Completed 302 Found in 141ms (ActiveRecord: 119.0ms)
+
+
+Started GET "/movies/1" for 127.0.0.1 at 2016-11-23 21:53:26 -0600
+Processing by MoviesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mMovie Load (0.5ms)[0m  [1m[34mSELECT  "movies".* FROM "movies" WHERE "movies"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering movies/show.html.erb within layouts/application
+  Rendered movies/show.html.erb within layouts/application (1.3ms)
+Completed 200 OK in 38ms (Views: 35.3ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/movies" for 127.0.0.1 at 2016-11-23 21:53:27 -0600
+Processing by MoviesController#index as HTML
+  Rendering movies/index.html.erb within layouts/application
+  [1m[36mMovie Load (0.5ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 1]]
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 12]]
+  Rendered movies/index.html.erb within layouts/application (11.8ms)
+Completed 200 OK in 50ms (Views: 46.2ms | ActiveRecord: 1.1ms)
+
+
+Started DELETE "/movies/12" for 127.0.0.1 at 2016-11-23 21:54:12 -0600
+Processing by MoviesController#destroy as HTML
+  Parameters: {"authenticity_token"=>"LWjz0miADhxJ3hBiD1OLc0RkhowjCmcHGgAkVSAT+clVCZvyD1YODQDmJ5Z7AvhXxNinJqmOUfGKeBbD0u21kw==", "id"=>"12"}
+  [1m[36mMovie Load (0.3ms)[0m  [1m[34mSELECT  "movies".* FROM "movies" WHERE "movies"."id" = $1 LIMIT $2[0m  [["id", 12], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[31mDELETE FROM "movies_tags" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 12]]
+  [1m[35mSQL (0.4ms)[0m  [1m[31mDELETE FROM "movies" WHERE "movies"."id" = $1[0m  [["id", 12]]
+  [1m[35m (23.3ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/movies
+Completed 302 Found in 31ms (ActiveRecord: 24.5ms)
+
+
+Started GET "/movies" for 127.0.0.1 at 2016-11-23 21:54:12 -0600
+Processing by MoviesController#index as HTML
+  Rendering movies/index.html.erb within layouts/application
+  [1m[36mMovie Load (0.3ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 1]]
+  Rendered movies/index.html.erb within layouts/application (5.7ms)
+Completed 200 OK in 40ms (Views: 37.6ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/movies/new" for 127.0.0.1 at 2016-11-23 21:54:19 -0600
+Processing by MoviesController#new as HTML
+  Rendering movies/new.html.erb within layouts/application
+  [1m[36mTag Load (0.4ms)[0m  [1m[34mSELECT "tags".* FROM "tags"[0m
+  Rendered movies/_form.html.erb (5.7ms)
+  Rendered movies/new.html.erb within layouts/application (7.8ms)
+Completed 200 OK in 40ms (Views: 37.8ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/movies/new" for 127.0.0.1 at 2016-11-23 21:54:26 -0600
+Processing by MoviesController#new as HTML
+  Rendering movies/new.html.erb within layouts/application
+  [1m[36mTag Load (0.6ms)[0m  [1m[34mSELECT "tags".* FROM "tags"[0m
+  Rendered movies/_form.html.erb (6.5ms)
+  Rendered movies/new.html.erb within layouts/application (8.6ms)
+Completed 200 OK in 43ms (Views: 40.6ms | ActiveRecord: 0.6ms)
+
+
+Started POST "/movies" for 127.0.0.1 at 2016-11-23 21:54:35 -0600
+Processing by MoviesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"evTKmH+9DcH+qBjKv9oLYyKlOZUDYX0D3riI2Die3WbZ6WVK7wn7FpGKCpypG+fageGtmtkFYWz2r+5ObcI5Ag==", "movie"=>{"name"=>"terminator 2 ", "tags_ids"=>[""]}, "commit"=>"Create Movie"}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "movies" ("name", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["name", "terminator 2 "], ["created_at", 2016-11-24 03:54:35 UTC], ["updated_at", 2016-11-24 03:54:35 UTC]]
+  [1m[35m (41.1ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/movies/13
+Completed 302 Found in 49ms (ActiveRecord: 41.8ms)
+
+
+Started GET "/movies/13" for 127.0.0.1 at 2016-11-23 21:54:35 -0600
+Processing by MoviesController#show as HTML
+  Parameters: {"id"=>"13"}
+  [1m[36mMovie Load (0.3ms)[0m  [1m[34mSELECT  "movies".* FROM "movies" WHERE "movies"."id" = $1 LIMIT $2[0m  [["id", 13], ["LIMIT", 1]]
+  Rendering movies/show.html.erb within layouts/application
+  Rendered movies/show.html.erb within layouts/application (0.9ms)
+Completed 200 OK in 31ms (Views: 28.3ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/movies/13/edit" for 127.0.0.1 at 2016-11-23 21:54:38 -0600
+Processing by MoviesController#edit as HTML
+  Parameters: {"id"=>"13"}
+  [1m[36mMovie Load (0.3ms)[0m  [1m[34mSELECT  "movies".* FROM "movies" WHERE "movies"."id" = $1 LIMIT $2[0m  [["id", 13], ["LIMIT", 1]]
+  Rendering movies/edit.html.erb within layouts/application
+  [1m[36mTag Load (0.4ms)[0m  [1m[34mSELECT "tags".* FROM "tags"[0m
+  Rendered movies/_form.html.erb (5.0ms)
+  Rendered movies/edit.html.erb within layouts/application (6.6ms)
+Completed 200 OK in 36ms (Views: 33.3ms | ActiveRecord: 0.8ms)
+
+
+Started PATCH "/movies/13" for 127.0.0.1 at 2016-11-23 21:54:45 -0600
+Processing by MoviesController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"w7G+b34gt3yhlh54aQu0qtaTXdx+3hubGvvHLJm5jdXlKJzhjogmpGZ9JAoFr9C1xj/+PK6Hi48UfGv1qgog+A==", "movie"=>{"name"=>"terminator 2 ", "tags_ids"=>[""]}, "commit"=>"Update Movie", "id"=>"13"}
+  [1m[36mMovie Load (0.4ms)[0m  [1m[34mSELECT  "movies".* FROM "movies" WHERE "movies"."id" = $1 LIMIT $2[0m  [["id", 13], ["LIMIT", 1]]
+  [1m[36mTag Load (0.4ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 13]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/movies/13
+Completed 302 Found in 11ms (ActiveRecord: 1.5ms)
+
+
+Started GET "/movies/13" for 127.0.0.1 at 2016-11-23 21:54:45 -0600
+Processing by MoviesController#show as HTML
+  Parameters: {"id"=>"13"}
+  [1m[36mMovie Load (0.4ms)[0m  [1m[34mSELECT  "movies".* FROM "movies" WHERE "movies"."id" = $1 LIMIT $2[0m  [["id", 13], ["LIMIT", 1]]
+  Rendering movies/show.html.erb within layouts/application
+  Rendered movies/show.html.erb within layouts/application (1.8ms)
+Completed 200 OK in 32ms (Views: 29.7ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/movies" for 127.0.0.1 at 2016-11-23 21:54:48 -0600
+Processing by MoviesController#index as HTML
+  Rendering movies/index.html.erb within layouts/application
+  [1m[36mMovie Load (0.4ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 1]]
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 13]]
+  Rendered movies/index.html.erb within layouts/application (10.1ms)
+Completed 200 OK in 35ms (Views: 32.9ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/movies/1/delete_tag/1" for 127.0.0.1 at 2016-11-23 21:54:56 -0600
+Processing by MoviesController#delete_tag as HTML
+  Parameters: {"id"=>"1", "tag_id"=>"1"}
+  [1m[36mMovie Load (0.3ms)[0m  [1m[34mSELECT  "movies".* FROM "movies" WHERE "movies"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTag Load (0.4ms)[0m  [1m[34mSELECT  "tags".* FROM "tags" WHERE "tags"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[31mDELETE FROM "movies_tags" WHERE "movies_tags"."movie_id" = $1 AND "movies_tags"."tag_id" = 1[0m  [["movie_id", 1]]
+  [1m[35m (13.2ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/movies
+Completed 302 Found in 21ms (ActiveRecord: 14.4ms)
+
+
+Started GET "/movies" for 127.0.0.1 at 2016-11-23 21:54:56 -0600
+Processing by MoviesController#index as HTML
+  Rendering movies/index.html.erb within layouts/application
+  [1m[36mMovie Load (0.5ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  [1m[36mTag Load (0.2ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 1]]
+  [1m[36mTag Load (0.1ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 13]]
+  Rendered movies/index.html.erb within layouts/application (6.3ms)
+Completed 200 OK in 25ms (Views: 22.9ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/movies/1/edit" for 127.0.0.1 at 2016-11-23 21:55:00 -0600
+Processing by MoviesController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mMovie Load (0.4ms)[0m  [1m[34mSELECT  "movies".* FROM "movies" WHERE "movies"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering movies/edit.html.erb within layouts/application
+  [1m[36mTag Load (0.6ms)[0m  [1m[34mSELECT "tags".* FROM "tags"[0m
+  Rendered movies/_form.html.erb (6.2ms)
+  Rendered movies/edit.html.erb within layouts/application (8.1ms)
+Completed 200 OK in 38ms (Views: 34.5ms | ActiveRecord: 0.9ms)
+
+
+Started PATCH "/movies/1" for 127.0.0.1 at 2016-11-23 21:55:03 -0600
+Processing by MoviesController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"409+QKPYJdUhCTPx6pMoI9VX3AE7oBPlEPdpJdep6r6QhGg3PK7rSADi2mmaMsMQhpFnlkJcBf4yDm4w3OnP+g==", "movie"=>{"name"=>"Terminator", "tags_ids"=>["", "1", "2"]}, "commit"=>"Update Movie", "id"=>"1"}
+  [1m[36mMovie Load (0.3ms)[0m  [1m[34mSELECT  "movies".* FROM "movies" WHERE "movies"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTag Load (0.4ms)[0m  [1m[34mSELECT "tags".* FROM "tags" WHERE "tags"."id" IN (1, 2)[0m
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "movies_tags" ("movie_id", "tag_id") VALUES ($1, $2)[0m  [["movie_id", 1], ["tag_id", 1]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "movies_tags" ("movie_id", "tag_id") VALUES ($1, $2)[0m  [["movie_id", 1], ["tag_id", 2]]
+  [1m[35m (50.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/movies/1
+Completed 302 Found in 67ms (ActiveRecord: 52.9ms)
+
+
+Started GET "/movies/1" for 127.0.0.1 at 2016-11-23 21:55:04 -0600
+Processing by MoviesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mMovie Load (0.3ms)[0m  [1m[34mSELECT  "movies".* FROM "movies" WHERE "movies"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering movies/show.html.erb within layouts/application
+  Rendered movies/show.html.erb within layouts/application (0.7ms)
+Completed 200 OK in 21ms (Views: 18.8ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/movies" for 127.0.0.1 at 2016-11-23 21:55:05 -0600
+Processing by MoviesController#index as HTML
+  Rendering movies/index.html.erb within layouts/application
+  [1m[36mMovie Load (0.3ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 1]]
+  [1m[36mTag Load (0.5ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 13]]
+  Rendered movies/index.html.erb within layouts/application (10.8ms)
+Completed 200 OK in 36ms (Views: 33.5ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/movies/13/edit" for 127.0.0.1 at 2016-11-23 21:55:12 -0600
+Processing by MoviesController#edit as HTML
+  Parameters: {"id"=>"13"}
+  [1m[36mMovie Load (0.3ms)[0m  [1m[34mSELECT  "movies".* FROM "movies" WHERE "movies"."id" = $1 LIMIT $2[0m  [["id", 13], ["LIMIT", 1]]
+  Rendering movies/edit.html.erb within layouts/application
+  [1m[36mTag Load (0.7ms)[0m  [1m[34mSELECT "tags".* FROM "tags"[0m
+  Rendered movies/_form.html.erb (7.0ms)
+  Rendered movies/edit.html.erb within layouts/application (9.2ms)
+Completed 200 OK in 42ms (Views: 37.0ms | ActiveRecord: 1.0ms)
+
+
+Started PATCH "/movies/13" for 127.0.0.1 at 2016-11-23 21:55:15 -0600
+Processing by MoviesController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"FU1C/pMMjClHB4gg253RW2JmRz76S1SAWY9fWpCNMBYz1GBwY6Qd8YDsslK3ObVEcsrk3ioSxJRXCPODoz6dOw==", "movie"=>{"name"=>"terminator 2 ", "tags_ids"=>["", "1", "2"]}, "commit"=>"Update Movie", "id"=>"13"}
+  [1m[36mMovie Load (0.3ms)[0m  [1m[34mSELECT  "movies".* FROM "movies" WHERE "movies"."id" = $1 LIMIT $2[0m  [["id", 13], ["LIMIT", 1]]
+  [1m[36mTag Load (0.6ms)[0m  [1m[34mSELECT "tags".* FROM "tags" WHERE "tags"."id" IN (1, 2)[0m
+  [1m[36mTag Load (0.8ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 13]]
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "movies_tags" ("movie_id", "tag_id") VALUES ($1, $2)[0m  [["movie_id", 13], ["tag_id", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "movies_tags" ("movie_id", "tag_id") VALUES ($1, $2)[0m  [["movie_id", 13], ["tag_id", 2]]
+  [1m[35m (72.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://localhost:3000/movies/13
+Completed 302 Found in 92ms (ActiveRecord: 75.3ms)
+
+
+Started GET "/movies/13" for 127.0.0.1 at 2016-11-23 21:55:16 -0600
+Processing by MoviesController#show as HTML
+  Parameters: {"id"=>"13"}
+  [1m[36mMovie Load (0.4ms)[0m  [1m[34mSELECT  "movies".* FROM "movies" WHERE "movies"."id" = $1 LIMIT $2[0m  [["id", 13], ["LIMIT", 1]]
+  Rendering movies/show.html.erb within layouts/application
+  Rendered movies/show.html.erb within layouts/application (1.2ms)
+Completed 200 OK in 31ms (Views: 28.5ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/movies" for 127.0.0.1 at 2016-11-23 21:55:17 -0600
+Processing by MoviesController#index as HTML
+  Rendering movies/index.html.erb within layouts/application
+  [1m[36mMovie Load (0.5ms)[0m  [1m[34mSELECT "movies".* FROM "movies"[0m
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 1]]
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags" INNER JOIN "movies_tags" ON "tags"."id" = "movies_tags"."tag_id" WHERE "movies_tags"."movie_id" = $1[0m  [["movie_id", 13]]
+  Rendered movies/index.html.erb within layouts/application (10.3ms)
+Completed 200 OK in 37ms (Views: 34.3ms | ActiveRecord: 1.1ms)
+
+
